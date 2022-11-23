@@ -31,14 +31,14 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.3.2_msvc2019_64</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;printsupport;sql;uitools;widgets</QtModules>
+    <QtModules>core;gui;widgets;printsupport;sql;uitools</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
+    <QtInstall>6.3.2_msvc2019_64</QtInstall>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.3.2_msvc2019_64</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;printsupport;sql;uitools;widgets</QtModules>
+    <QtModules>core;gui;widgets;printsupport;sql;uitools</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
+    <QtInstall>6.3.2_msvc2019_64</QtInstall>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -137,6 +137,9 @@
     <QtMoc Include="Headers\SelectPatientDialog.h" />
     <QtMoc Include="Headers\SelectDateDialog.h" />
     <QtMoc Include="Headers\MolybdeenBatchUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Styles\add_dose_styles.qss" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

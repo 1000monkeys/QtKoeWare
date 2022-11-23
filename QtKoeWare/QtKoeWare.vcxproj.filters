@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Styles">
+      <UniqueIdentifier>{a3567cab-3be4-4d66-aa79-e4303ea0e737}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="QtKoeWare.qrc">
@@ -169,5 +172,10 @@
     <ClInclude Include="Headers\SimRun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Styles\add_dose_styles.qss">
+      <Filter>Styles</Filter>
+    </None>
   </ItemGroup>
 </Project>

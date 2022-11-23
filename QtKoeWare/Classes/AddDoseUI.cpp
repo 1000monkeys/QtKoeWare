@@ -15,6 +15,17 @@ AddDoseUI::AddDoseUI(QMainWindow* parent)
 	connect(addDoseUI.selectPatientButton, &QPushButton::released, this, &AddDoseUI::ShowPatientDialog);
 	connect(addDoseUI.setRadioActivityButton, &QPushButton::released, this, &AddDoseUI::RandomizeRadioActivity);
 
+	QFile file("Styles/add_dose_styles.qss");
+	file.open(QFile::ReadOnly);
+	QString styleSheet = QLatin1String(file.readAll());
+	qDebug() << "style sheet = " << styleSheet;
+	setStyleSheet(styleSheet);
+	ensurePolished();
+	
+
+	QString button_style = "background-color: red;";
+	addDoseUI.selectBatchButton->setStyleSheet(button_style);
+
 	connect(addDoseUI.injectionDateButton, &QPushButton::released, this, &AddDoseUI::ShowDateDialog);
 	connect(addDoseUI.submitButton, &QPushButton::released, this, &AddDoseUI::submitDoseData);
 

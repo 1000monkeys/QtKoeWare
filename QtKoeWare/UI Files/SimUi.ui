@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="startSimButton">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>100</x>
      <y>160</y>
      <width>121</width>
      <height>23</height>
