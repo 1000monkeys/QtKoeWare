@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>775</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>KoeWare Main</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>750</width>
+      <height>500</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>775</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuBatch">
+    <property name="title">
+     <string>Batch</string>
+    </property>
+    <addaction name="moBatch"/>
+    <addaction name="teBatch"/>
+   </widget>
+   <widget class="QMenu" name="menuPatient">
+    <property name="title">
+     <string>Patient</string>
+    </property>
+    <addaction name="addPatient"/>
+    <addaction name="addDose"/>
+   </widget>
+   <widget class="QMenu" name="menuSimulate">
+    <property name="title">
+     <string>Simulate</string>
+    </property>
+    <addaction name="startSimulation"/>
+   </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="test"/>
+   </widget>
+   <widget class="QMenu" name="menuAdmin">
+    <property name="title">
+     <string>Admin</string>
+    </property>
+    <addaction name="settings"/>
+   </widget>
+   <addaction name="menuBatch"/>
+   <addaction name="menuPatient"/>
+   <addaction name="menuSimulate"/>
+   <addaction name="menuAdmin"/>
+   <addaction name="menuTest"/>
+  </widget>
+  <action name="addPatient">
+   <property name="text">
+    <string>Submit Patient</string>
+   </property>
+  </action>
+  <action name="actiontesting456">
+   <property name="text">
+    <string>testing 456</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>testing456</string>
+   </property>
+  </action>
+  <action name="moBatch">
+   <property name="text">
+    <string>Production Batch</string>
+   </property>
+  </action>
+  <action name="teBatch">
+   <property name="text">
+    <string>Technetium Batch</string>
+   </property>
+  </action>
+  <action name="addDose">
+   <property name="text">
+    <string>Add dose to patient</string>
+   </property>
+  </action>
+  <action name="startSimulation">
+   <property name="text">
+    <string>Start simulation</string>
+   </property>
+  </action>
+  <action name="test">
+   <property name="text">
+    <string>Test</string>
+   </property>
+  </action>
+  <action name="settings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/QtKoeWare">
+        <file>Classes/AddDoseUI.cpp</file>
+        <file>Classes/AddPatientUI.cpp</file>
+        <file>Classes/CalcRadioActivity.cpp</file>
+        <file>Classes/DataBase.cpp</file>
+        <file>Classes/General.cpp</file>
+        <file>Classes/MolybdeenBatchUI.cpp</file>
+        <file>Classes/SelectDateDialog.cpp</file>
+        <file>Classes/SelectPatientDialog.cpp</file>
+        <file>Classes/SelectTableDialog.cpp</file>
+        <file>Classes/SettingsUI.cpp</file>
+        <file>Classes/SimRun.cpp</file>
+        <file>Classes/SimulationUI.cpp</file>
+        <file>Classes/TechnetiumBatchUI.cpp</file>
+        <file>Classes/TestClass.cpp</file>
+        <file>Headers/AddDoseUI.h</file>
+        <file>Headers/AddPatientUI.h</file>
+        <file>Headers/CalcRadioActivity.h</file>
+        <file>Headers/DataBase.h</file>
+        <file>Headers/MolybdeenBatchUI.h</file>
+        <file>Headers/Screen.h</file>
+        <file>Headers/SelectDateDialog.h</file>
+        <file>Headers/SelectPatientDialog.h</file>
+        <file>Headers/SelectTableDialog.h</file>
+        <file>Headers/SettingsUI.h</file>
+        <file>Headers/SimRun.h</file>
+        <file>Headers/SimulationUI.h</file>
+        <file>Headers/TechnetiumBatchUI.h</file>
+        <file>Headers/TestClass.h</file>
+        <file>UI Files/AddDose.ui</file>
+        <file>UI Files/AddPatient.ui</file>
+        <file>UI Files/KoeWare.ui</file>
+        <file>UI Files/MolybdeenBatch.ui</file>
+        <file>UI Files/SelectDateDialog.ui</file>
+        <file>UI Files/SelectPatientDialog.ui</file>
+        <file>UI Files/SelectTableDialog.ui</file>
+        <file>UI Files/Settings.ui</file>
+        <file>UI Files/SimUi.ui</file>
+        <file>UI Files/TechnetiumBatch.ui</file>
+        <file>UI Files/testUI.ui</file>
+    </qresource>
+</RCC>

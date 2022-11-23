@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CD921996-AF62-4551-83D2-33A60F039C1C}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.3.2_msvc2019_64</QtInstall>
+    <QtModules>charts;core;datavisualization;gui;printsupport;sql;uitools;widgets</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.3.2_msvc2019_64</QtInstall>
+    <QtModules>charts;core;datavisualization;gui;printsupport;sql;uitools;widgets</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <QtRcc Include="QtKoeWare.qrc" />
+    <QtUic Include="QtKoeWare.ui" />
+    <QtMoc Include="QtKoeWare.h" />
+    <ClCompile Include="Classes\AddDoseUI.cpp" />
+    <ClCompile Include="Classes\AddPatientUI.cpp" />
+    <ClCompile Include="Classes\CalcRadioActivity.cpp" />
+    <ClCompile Include="Classes\DataBase.cpp" />
+    <ClCompile Include="Classes\General.cpp" />
+    <ClCompile Include="Classes\MolybdeenBatchUI.cpp" />
+    <ClCompile Include="Classes\pdf.cpp" />
+    <ClCompile Include="Classes\SelectDateDialog.cpp" />
+    <ClCompile Include="Classes\SelectPatientDialog.cpp" />
+    <ClCompile Include="Classes\SelectTableDialog.cpp" />
+    <ClCompile Include="Classes\SettingsUI.cpp" />
+    <ClCompile Include="Classes\SimRun.cpp" />
+    <ClCompile Include="Classes\SimulationUI.cpp" />
+    <ClCompile Include="Classes\TechnetiumBatchUI.cpp" />
+    <ClCompile Include="Classes\TestClass.cpp" />
+    <ClCompile Include="QtKoeWare.cpp" />
+    <ClCompile Include="main.cpp" />
+    <QtUic Include="UI Files\AddDose.ui" />
+    <QtUic Include="UI Files\AddPatient.ui" />
+    <QtUic Include="UI Files\KoeWare.ui" />
+    <QtUic Include="UI Files\MolybdeenBatch.ui" />
+    <QtUic Include="UI Files\SelectDateDialog.ui" />
+    <QtUic Include="UI Files\SelectPatientDialog.ui" />
+    <QtUic Include="UI Files\SelectTableDialog.ui" />
+    <QtUic Include="UI Files\Settings.ui" />
+    <QtUic Include="UI Files\SimUi.ui" />
+    <QtUic Include="UI Files\TechnetiumBatch.ui" />
+    <QtUic Include="UI Files\testUI.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Headers\AddDoseUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Headers\AddPatientUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\CalcRadioActivity.h" />
+    <ClInclude Include="Headers\DataBase.h" />
+    <QtMoc Include="Headers\pdf.h" />
+    <ClInclude Include="Headers\Screen.h" />
+    <ClInclude Include="Headers\SettingsUI.h" />
+    <ClInclude Include="Headers\SimRun.h" />
+    <QtMoc Include="Headers\TestClass.h" />
+    <QtMoc Include="Headers\TechnetiumBatchUI.h" />
+    <QtMoc Include="Headers\SimulationUI.h" />
+    <QtMoc Include="Headers\SelectTableDialog.h" />
+    <QtMoc Include="Headers\SelectPatientDialog.h" />
+    <QtMoc Include="Headers\SelectDateDialog.h" />
+    <QtMoc Include="Headers\MolybdeenBatchUI.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
