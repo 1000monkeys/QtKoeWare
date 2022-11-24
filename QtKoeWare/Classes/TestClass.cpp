@@ -7,10 +7,13 @@ TestUI::TestUI(QMainWindow* parent)
 {
 	setWindowTitle("KoeWare");
 	setMinimumSize(500, 300);
+
 	testUI.setupUi(this);
+
 	connect(testUI.testButton1, &QPushButton::released, this, &TestUI::Test1);
 	connect(testUI.testButton2, &QPushButton::released, this, &TestUI::Test2);
 	connect(testUI.testButton3, &QPushButton::released, this, &TestUI::Test3);
+	connect(testUI.pdfButton, &QPushButton::released, this, &TestUI::createPdf);
 }
 
 void TestUI::closeEvent(QCloseEvent* event) {
@@ -36,6 +39,5 @@ void TestUI::Test3() {
 }
 
 void TestUI::createPdf() {
-	//Pdf pdf;
-	//pdf.createPdf();
+	pdf->createPdf();
 }

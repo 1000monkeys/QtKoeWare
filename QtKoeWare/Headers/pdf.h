@@ -4,13 +4,16 @@
 #include <QString>
 #include <QTextDocument>
 #include <QPrinter>
+#include "DataBase.h"
 
-QT_BEGIN_NAMESPACE
-class Pdf : public QMainWindow {
-	Q_OBJECT
+class Pdf {
 
 public:
-	Pdf(QMainWindow* parent = nullptr);
+	Pdf();
 	void createPdf();
+
+private:
+	QString filename = "output.pdf";
+
+	DataBase* db = new DataBase;
 };
-QT_END_NAMESPACE

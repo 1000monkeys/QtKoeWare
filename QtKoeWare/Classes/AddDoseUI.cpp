@@ -18,7 +18,7 @@ AddDoseUI::AddDoseUI(QMainWindow* parent)
 	QFile file("Styles/add_dose_styles.qss");
 	file.open(QFile::ReadOnly);
 	QString styleSheet = QLatin1String(file.readAll());
-	qDebug() << "style sheet = " << styleSheet;
+	file.close();
 	setStyleSheet(styleSheet);
 	ensurePolished();
 	

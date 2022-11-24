@@ -152,9 +152,6 @@
     <QtMoc Include="Headers\TestClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Headers\pdf.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\CalcRadioActivity.h">
@@ -170,6 +167,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\SimRun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\pdf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

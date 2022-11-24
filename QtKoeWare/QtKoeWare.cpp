@@ -54,8 +54,6 @@ QtKoeWare::QtKoeWare(QMainWindow* parent)
     testUI = new TestUI(this);
     stackWidget->insertWidget(screenIds.testId, testUI);
     qDebug() << "testui";
-
-    Pdf pdf;
 }
 
 void QtKoeWare::resetAll() {

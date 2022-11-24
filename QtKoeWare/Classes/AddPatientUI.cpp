@@ -72,11 +72,11 @@ checkReturnData AddPatientUI::nameCheck() {
 checkReturnData AddPatientUI::lengthCheck() {
 	checkReturnData returnData;
 
-	int min_length = std::stoi(settings["min_length"]);
-	int really_really_short_length = std::stoi(settings["really_really_short_length"]);
-	int really_short_length = std::stoi(settings["really_short_length"]);
-	int really_tall_length = std::stoi(settings["really_tall_length"]);
-	int really_really_tall_length = std::stoi(settings["really_really_tall_length"]);
+	int min_length = std::stoi(settings["min_height"]);
+	int really_really_short_length = std::stoi(settings["really_really_short_height"]);
+	int really_short_length = std::stoi(settings["really_short_height"]);
+	int really_tall_length = std::stoi(settings["really_tall_height"]);
+	int really_really_tall_length = std::stoi(settings["really_really_tall_height"]);
 
 	if (patientUI.length->text().length() < min_length) {
 		returnData.errors.push_back("Length is not entered!");

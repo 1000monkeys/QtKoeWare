@@ -22,6 +22,7 @@ private:
 	Ui_testUI testUI;
 	SimRun* sim = new SimRun;
 	DataBase* db = new DataBase;
+	Pdf* pdf = new Pdf;
 
 	void closeEvent(QCloseEvent* event);
 

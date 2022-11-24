@@ -63,8 +63,5 @@ private:
     SettingsUI* settingsUI;
     SimulationUI* startSimulationUI;
     TestUI* testUI;
-
-    void setLastPositionMoved();
-    bool moved = false;
 };
 QT_END_NAMESPACE

@@ -152,6 +152,127 @@ QSqlError DataBase::initDb()
     return QSqlError();
 }
 
+std::map<int, std::map<std::string, std::string>> DataBase::getBatches(const int& batchid) {
+    QSqlQuery q;
+
+    const auto GET_BATCH_DATA =
+        QLatin1String("SELECT * FROM batches WHERE batchId='") +
+        QLatin1String(std::to_string(batchid)) +
+        QLatin1String("';");
+
+    if (!q.prepare(GET_BATCH_DATA)) {
+        qDebug() << "Error on get batch data";
+        //return q.lastError();
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["id"] = q.value("id").toString().toStdString();
+            data[count]["batchId"] = q.value("batchId").toString().toStdString();
+            data[count]["dateTimeProduced"] = q.value("dateTimeProduced").toString().toStdString();
+            data[count]["dateTimeMeasured"] = q.value("dateTimeMeasured").toString().toStdString();
+            data[count]["radioactivity"] = q.value("radioactivity").toString().toStdString();
+            qDebug() << count;
+            qDebug() << "Found batch";
+            count++;
+        }
+    }
+    return data;
+}
+
+std::map<int, std::map<std::string, std::string>> DataBase::getDoseToPatient(const int& teBatchId) {
+    QSqlQuery q;
+
+    const auto GET_BATCH_DATA =
+        QLatin1String("SELECT * FROM dosetopatient WHERE patientId='") +
+        QLatin1String(std::to_string(teBatchId)) +
+        QLatin1String("';");
+
+    if (!q.prepare(GET_BATCH_DATA)) {
+        qDebug() << "Error on get batch data";
+        //return q.lastError();
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["id"] = q.value("id").toString().toStdString();
+            data[count]["patientId"] = q.value("patientId").toString().toStdString();
+            data[count]["teBatchId"] = q.value("teBatchId").toString().toStdString();
+            data[count]["injectionDate"] = q.value("injectionDate").toString().toStdString();
+            data[count]["injectionTime"] = q.value("injectionTime").toString().toStdString();
+            data[count]["doseRadioactivity"] = q.value("doseRadioactivity").toString().toStdString();
+            qDebug() << count;
+            count++;
+        }
+    }
+    return data;
+}
+
+std::map<int, std::map<std::string, std::string>> DataBase::getPatient(const int& patientId)
+{
+    QSqlQuery q;
+
+    const auto GET_BATCH_DATA =
+        QLatin1String("SELECT * FROM patients WHERE patientId='") +
+        QLatin1String(std::to_string(patientId)) +
+        QLatin1String("';");
+
+    if (!q.prepare(GET_BATCH_DATA)) {
+        qDebug() << "Error on get batch data";
+        //return q.lastError();
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["patientId"] = q.value("patientId").toString().toStdString();
+            data[count]["name"] = q.value("name").toString().toStdString();
+            data[count]["length"] = q.value("length").toString().toStdString();
+            data[count]["weight"] = q.value("weight").toString().toStdString();
+            data[count]["birthdate"] = q.value("birthdate").toString().toStdString();
+            data[count]["sex"] = q.value("sex").toString().toStdString();
+            qDebug() << count;
+            count++;
+        }
+    }
+    return data;
+}
+
+std::map<int, std::map<std::string, std::string>> DataBase::getTeBatches(const int& moBatchId) {
+    QSqlQuery q;
+
+    const auto GET_TE_BATCH_DATA =
+        QLatin1String("SELECT * FROM tebatches WHERE moBatchId='") +
+        QLatin1String(std::to_string(moBatchId)) +
+        QLatin1String("';");
+
+    if (!q.prepare(GET_TE_BATCH_DATA)) {
+        qDebug() << "Error on get batch data";
+        //return q.lastError();
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["id"] = q.value("id").toString().toStdString();
+            data[count]["moBatchId"] = q.value("moBatchId").toString().toStdString();
+            data[count]["teBatchId"] = q.value("teBatchId").toString().toStdString();
+            data[count]["dateTimeProduced"] = q.value("dateTimeProduced").toString().toStdString();
+            data[count]["radioactivity"] = q.value("radioactivity").toString().toStdString();
+            qDebug() << count;
+            count++;
+        }
+    }
+    return data;
+}
+
+
 std::map<std::string, std::string> DataBase::getDefaultSettings() {
     std::map<std::string, std::string> settings;
 
@@ -209,7 +330,7 @@ std::map<std::string, std::string> DataBase::getSettings()
             QLatin1String(key) +
             QLatin1String("' ORDER BY setDateTime DESC LIMIT 1;")
         )) {
-            qDebug() << "selected settings";
+            //qDebug() << "selected settings";
         }
         else {
             qDebug() << "not selected 12375612746";
@@ -217,9 +338,9 @@ std::map<std::string, std::string> DataBase::getSettings()
         while (q.next()) {
             settings[q.value("name").toString().toStdString()] = q.value("value").toString().toStdString();
 
-            QString Values = "name: " + q.value("name").toString() +
-                " & value: " + q.value("value").toString();
-            qDebug() << Values;
+            //QString Values = "name: " + q.value("name").toString() +
+            //    " & value: " + q.value("value").toString();
+            //qDebug() << Values;
         }
     }
 
@@ -241,7 +362,7 @@ std::map<std::string, std::string> DataBase::getSettings()
             q.addBindValue(QString::fromStdString(k));
             q.addBindValue(QString::fromStdString(defaultSettings[k]));
             q.exec();
-            qDebug() << "INSERTED SETTING " << QString::fromStdString(k);
+            //qDebug() << "INSERTED SETTING " << QString::fromStdString(k);
         }
     }
 
@@ -474,7 +595,7 @@ void DataBase::printDB() {
     }
 
     if (q.exec("SELECT * FROM settings")) {
-        qDebug() << "selected settings";
+        //qDebug() << "selected settings";
     }
     else {
         qDebug() << "not selected";

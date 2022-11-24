@@ -97,7 +97,6 @@ const auto INSERT_DOSE_TO_PATIENT_SQL_SIM = QLatin1String(R"(
     insert into dosetopatientsim(patientId, teBatchId, injectionDate, injectionTime, doseRadioactivity) values(?, ?, ?, ?, ?)
     )");
 
-
 class DataBase {
 
 public:
@@ -131,6 +130,11 @@ public:
     int GetLatestSetting(std::string setting_name);
     int CountRows(std::string table, std::string column, std::string check_value);
     void DeleteTableContents(std::string table);
+
+    std::map<int, std::map<std::string, std::string>> getBatches(const int& batchid);
+    std::map<int, std::map<std::string, std::string>> getTeBatches(const int& moBatchId);
+    std::map<int, std::map<std::string, std::string>> getDoseToPatient(const int& teBatchId);
+    std::map<int, std::map<std::string, std::string>> getPatient(const int& patientId);
 
     //int newInt(std::string table, std::string value);
 };

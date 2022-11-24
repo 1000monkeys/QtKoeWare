@@ -126,7 +126,7 @@
   <ItemGroup>
     <ClInclude Include="Headers\CalcRadioActivity.h" />
     <ClInclude Include="Headers\DataBase.h" />
-    <QtMoc Include="Headers\pdf.h" />
+    <ClInclude Include="Headers\pdf.h" />
     <ClInclude Include="Headers\Screen.h" />
     <ClInclude Include="Headers\SettingsUI.h" />
     <ClInclude Include="Headers\SimRun.h" />
