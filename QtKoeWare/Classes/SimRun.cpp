@@ -204,8 +204,8 @@ bool SimRun::CheckLeapYear(int year) {
 }
 
 void SimRun::CreatePatient() {
-    QString surname = RandomLine("surnames.txt", Random(0, 2999));
-    QString lastname = RandomLine("lastnames.txt", Random(0, 316));
+    QString surname = RandomLine("surnames.txt", Random(0, 3003));
+    QString lastname = RandomLine("lastnames.txt", Random(0, 320));
     QString name = surname + " " + lastname;
     int weight = Random(25, 175);
     int height = Random(80, 210);
@@ -230,8 +230,8 @@ void SimRun::CreatePatient() {
         day = Random(1, 31);
     }
     birthdate.setDate(year, month, day);
-
-    db->addPatientToSim(name, height, weight, birthdate, sex);
+    qDebug() << name << height << weight << birthdate << sex;
+    // db->addPatientToSim(name, height, weight, birthdate, sex);
 }
 
 void SimRun::Run(int daysToRun) {

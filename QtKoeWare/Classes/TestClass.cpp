@@ -22,8 +22,6 @@ void TestUI::resetInputs() {
 
 void TestUI::Test1() {
 	sim->CreatePatient();
-	sim->AddDoseToPatient();
-	db->printDB();
 }
 
 void TestUI::Test2() {
