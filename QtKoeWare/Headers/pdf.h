@@ -11,6 +11,6 @@ class Pdf : public QMainWindow {
 
 public:
 	Pdf(QMainWindow* parent = nullptr);
-	void run();
+	void createPdf();
 };
 QT_END_NAMESPACE

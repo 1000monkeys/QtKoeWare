@@ -52,6 +52,19 @@
     <string>Test 2</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pdfButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>160</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Create PDF</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

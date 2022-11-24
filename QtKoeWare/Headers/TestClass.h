@@ -6,6 +6,7 @@
 #include "DataBase.h"
 #include "ui_testUI.h"
 #include "../Headers/SimRun.h"
+#include "../Headers/pdf.h"
 
 QT_BEGIN_NAMESPACE
 class TestUI : public QMainWindow, public Screen
@@ -27,5 +28,6 @@ private:
 	void Test1();
 	void Test2();
 	void Test3();
+	void createPdf();
 };
 QT_END_NAMESPACE

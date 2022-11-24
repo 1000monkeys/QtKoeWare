@@ -34,3 +34,8 @@ void TestUI::Test2() {
 void TestUI::Test3() {
 	db->printSimDb();
 }
+
+void TestUI::createPdf() {
+	//Pdf pdf;
+	//pdf.createPdf();
+}

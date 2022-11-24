@@ -15,6 +15,6 @@ Pdf::Pdf(QMainWindow* parent) : QMainWindow(parent)
     document.print(&printer);
 }
 
-void Pdf::run()
-{
+void Pdf::createPdf() {
+    qDebug() << "CREATE PDF!!";
 }
