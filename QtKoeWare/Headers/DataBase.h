@@ -133,8 +133,10 @@ public:
 
     std::map<int, std::map<std::string, std::string>> getBatches(const int& batchid);
     std::map<int, std::map<std::string, std::string>> getTeBatches(const int& moBatchId);
+    std::map<int, std::map<std::string, std::string>> getTe(const int& teBatchId);
     std::map<int, std::map<std::string, std::string>> getDoseToPatient(const int& teBatchId);
     std::map<int, std::map<std::string, std::string>> getPatient(const int& patientId);
+    std::map<int, std::map<std::string, std::string>> getDosePatientInfo(const int& teBatchId);
 
     //int newInt(std::string table, std::string value);
 };
