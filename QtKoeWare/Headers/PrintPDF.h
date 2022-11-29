@@ -20,5 +20,6 @@ private:
     Ui_PrintPDFUIFile printPDF;
 
     void closeEvent(QCloseEvent* event);
+    void search();
 };
 QT_END_NAMESPACE

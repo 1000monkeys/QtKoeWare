@@ -138,5 +138,6 @@ public:
     std::map<int, std::map<std::string, std::string>> getPatient(const int& patientId);
     std::map<int, std::map<std::string, std::string>> getDosePatientInfo(const int& teBatchId);
 
+
     //int newInt(std::string table, std::string value);
 };
