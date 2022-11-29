@@ -39,5 +39,7 @@
         <file>UI Files/SimUi.ui</file>
         <file>UI Files/TechnetiumBatch.ui</file>
         <file>UI Files/testUI.ui</file>
+        <file>Classes/PrintPDF.cpp</file>
+        <file>Headers/PrintPDF.h</file>
     </qresource>
 </RCC>
