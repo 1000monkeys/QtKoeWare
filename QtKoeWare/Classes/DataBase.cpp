@@ -574,6 +574,26 @@ QDate DataBase::LastDate(std::string table, std::string value) {
     return date;
 }
 
+QString DataBase::LastDateString(std::string table, std::string value) {
+    const auto FIND_DATE_STRING_SQL = QLatin1String("SELECT ") +
+        QLatin1String(value) +
+        QLatin1String(" FROM ") +
+        QLatin1String(table) +
+        QLatin1String(" WHERE id=(SELECT max(id) FROM ") +
+        QLatin1String(table) +
+        QLatin1String(");");
+
+    QSqlQuery q;
+    q.prepare(FIND_DATE_STRING_SQL);
+    q.exec();
+    while (q.next()) {
+        QString date = q.value(QLatin1String(value)).toString();
+        return date;
+    }
+    QString date = "no val";
+    return date;
+}
+
 int DataBase::LastInt(std::string table, std::string value) {
     const auto FIND_ID_SQL = QLatin1String("SELECT MAX(") +
         QLatin1String(value) +
@@ -610,6 +630,26 @@ QTime DataBase::LastTime(std::string table, std::string value) {
         return time;
     }
     time = QTime::currentTime();
+    return time;
+}
+
+QString DataBase::LastTimeString(std::string table, std::string value) {
+    QString time;
+    const auto FIND_TIME_STRING_SQL = QLatin1String("SELECT ") +
+        QLatin1String(value) +
+        QLatin1String(" FROM ") +
+        QLatin1String(table) +
+        QLatin1String(" WHERE id=(SELECT max(id) FROM ") +
+        QLatin1String(table) +
+        QLatin1String(");");
+    QSqlQuery q;
+    q.prepare(FIND_TIME_STRING_SQL);
+    q.exec();
+    while (q.next()) {
+        time = q.value(QLatin1String(value)).toString();
+        return time;
+    }
+    time = "no val";
     return time;
 }
 

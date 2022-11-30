@@ -6,6 +6,7 @@
 #include "DataBase.h"
 #include "ui_testUI.h"
 #include "../Headers/SimRun.h"
+#include"../Headers/GraphUi.h"
 
 QT_BEGIN_NAMESPACE
 class TestUI : public QMainWindow, public Screen
@@ -21,9 +22,9 @@ private:
 	Ui_testUI testUI;
 	SimRun* sim = new SimRun;
 	DataBase* db = new DataBase;
-
+	double setXVal(int i, int xmax, int plotpoints);
 	void closeEvent(QCloseEvent* event);
-
+	GraphUI* graph = new GraphUI;
 	void Test1();
 	void Test2();
 	void Test3();

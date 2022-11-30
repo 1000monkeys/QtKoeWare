@@ -68,6 +68,7 @@
      <string>Admin</string>
     </property>
     <addaction name="settings"/>
+    <addaction name="gotoGraph"/>
    </widget>
    <addaction name="menuBatch"/>
    <addaction name="menuPatient"/>
@@ -118,6 +119,11 @@
   <action name="settings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="gotoGraph">
+   <property name="text">
+    <string>Graphs</string>
    </property>
   </action>
  </widget>

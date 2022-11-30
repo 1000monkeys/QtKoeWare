@@ -23,6 +23,8 @@ QtKoeWare::QtKoeWare(QMainWindow* parent)
     connect(menuUI.settings, &QAction::triggered, this, &QtKoeWare::goToSettings);
     connect(menuUI.startSimulation, &QAction::triggered, this, &QtKoeWare::goToSimulation);
     connect(menuUI.test, &QAction::triggered, this, &QtKoeWare::goToTest);
+    connect(menuUI.gotoGraph, &QAction::triggered, this, &QtKoeWare::goToGraph);
+
 
     stackWidget = menuUI.centralwidget->findChild<QStackedWidget*>(QString::fromStdString("stackedWidget"));
 
@@ -55,6 +57,10 @@ QtKoeWare::QtKoeWare(QMainWindow* parent)
     stackWidget->insertWidget(screenIds.testId, testUI);
     qDebug() << "testui";
 
+    graphUI = new GraphUI(this);
+    stackWidget->insertWidget(screenIds.graphId, graphUI);
+    qDebug() << "grapjeui";
+
     Pdf pdf;
 }
 
@@ -65,6 +71,7 @@ void QtKoeWare::resetAll() {
     addPatientUI->resetInputs();
     startSimulationUI->resetInputs();
     testUI->resetInputs();
+
     resetInputs();
 }
 
@@ -98,6 +105,10 @@ void QtKoeWare::goToSimulation() {
 
 void QtKoeWare::goToTest() {
     stackWidget->setCurrentIndex(screenIds.testId);
+}
+
+void QtKoeWare::goToGraph() {
+    stackWidget->setCurrentIndex(screenIds.graphId);
 }
 
 void QtKoeWare::closeEvent(QCloseEvent* event) {

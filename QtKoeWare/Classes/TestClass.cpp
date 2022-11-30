@@ -11,6 +11,37 @@ TestUI::TestUI(QMainWindow* parent)
 	connect(testUI.testButton1, &QPushButton::released, this, &TestUI::Test1);
 	connect(testUI.testButton2, &QPushButton::released, this, &TestUI::Test2);
 	connect(testUI.testButton3, &QPushButton::released, this, &TestUI::Test3);
+
+
+    int plotpoints = 100;
+
+    QVector<double> x(102), y(102);
+    for (int i = 0; i < 101; ++i)
+    {
+        x[i] = setXVal(i, 10, 100);
+        y[i] = x[i] * x[i];
+    }
+
+
+    x[101] = x[100];
+    y[101] = y[100] - 50;
+
+    testUI.plot->addGraph();
+    testUI.plot->graph()->setData(x, y);
+    testUI.plot->xAxis->setLabel("x");
+    testUI.plot->yAxis->setLabel("y");
+    testUI.plot->xAxis->setRange(-10, 20);
+    testUI.plot->yAxis->setRange(0, 101);
+    testUI.plot->replot();
+    testUI.plot->saveJpg("graph.jpg");
+}
+
+double TestUI::setXVal(int i, int xmax, int plotpoints) {
+    double x = 0;
+    int halves = plotpoints / 2;
+    double conversion = halves / xmax;
+    x = i / conversion - xmax;
+    return x;
 }
 
 void TestUI::closeEvent(QCloseEvent* event) {
@@ -21,7 +52,8 @@ void TestUI::resetInputs() {
 }
 
 void TestUI::Test1() {
-	sim->CreatePatient();
+    graph->getTimeNow(true);
+    qDebug() << "time now: " << graph->getTimeNow(true);
 }
 
 void TestUI::Test2() {
@@ -30,5 +62,5 @@ void TestUI::Test2() {
 }
 
 void TestUI::Test3() {
-	db->printSimDb();
+    db->printSimDb();
 }

@@ -11,6 +11,7 @@
 #include "Headers/MolybdeenBatchUI.h"
 #include "Headers/AddDoseUI.h"
 #include "Headers/SettingsUI.h"
+#include "Headers/GraphUi.h"
 
 #include "Headers/TestClass.h"
 #include "Headers/SimulationUI.h"
@@ -24,6 +25,7 @@ struct ScreenIds {
     int addDoseId = 4;
     int testId = 5;
     int settingsId = 6;
+    int graphId = 7;
 };
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +57,7 @@ private:
     void goToSettings();
     void goToAddDose();
     void goToTest();
+    void goToGraph();
 
     MolybdeenBatchUI* moBatchUI;
     TechnetiumBatchUI* teBatchUI;
@@ -63,8 +66,6 @@ private:
     SettingsUI* settingsUI;
     SimulationUI* startSimulationUI;
     TestUI* testUI;
-
-    void setLastPositionMoved();
-    bool moved = false;
+    GraphUI* graphUI;
 };
 QT_END_NAMESPACE

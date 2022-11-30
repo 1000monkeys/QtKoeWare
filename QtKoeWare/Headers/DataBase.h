@@ -125,6 +125,8 @@ public:
     QString LastString(std::string table, std::string value);
     std::vector<std::string> AllRowsFromColumn(std::string table, std::string column);
     QString LastDateTime(std::string table, std::string value);
+    QString LastDateString(std::string table, std::string value);
+    QString LastTimeString(std::string talbe, std::string value);
     int GetdbInt(std::string table, std::string value, std::string known_index, std::string know_value);
     QDateTime GetdbDateTime(std::string table, std::string value, std::string known_index, std::string known_value);
     QList<QList<QVariant>> GetWhere(std::string table, QList<std::string> values, std::string known_index, std::string known_value);

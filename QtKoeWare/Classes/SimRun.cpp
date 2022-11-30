@@ -114,7 +114,6 @@ void SimRun::FirstTeBatch() {
 void SimRun::TechnetiumBatch() {
     bool weekendday = false;
     int fromMoBatchId = db->LastInt("batchessim", "batchId");
-    qDebug() << fromMoBatchId << " = from mo batch id";
     int teBatchId = db->LastInt("tebatchessim", "teBatchId");
     if (teBatchId == 0) {
         FirstTeBatch();
@@ -230,8 +229,7 @@ void SimRun::CreatePatient() {
         day = Random(1, 31);
     }
     birthdate.setDate(year, month, day);
-    qDebug() << name << height << weight << birthdate << sex;
-    // db->addPatientToSim(name, height, weight, birthdate, sex);
+    db->addPatientToSim(name, height, weight, birthdate, sex);
 }
 
 void SimRun::Run(int daysToRun) {
@@ -261,7 +259,10 @@ void SimRun::Run(int daysToRun) {
                 AddDoseToPatient();
                 patientsAdministered++;
             }
-            TechnetiumBatch();
+            if (daysToRun - 1 != i) {
+                TechnetiumBatch();
+            }
+            
         }
         else {
             while (patientsAdministered < 3) {
@@ -278,7 +279,9 @@ void SimRun::Run(int daysToRun) {
                     MolybdeenBatch();
                 }
             }
-            TechnetiumBatch();
+            if (daysToRun - 1 != i) {
+                TechnetiumBatch();
+            }
         }
     }
 }

@@ -93,6 +93,7 @@
     <ClCompile Include="Classes\CalcRadioActivity.cpp" />
     <ClCompile Include="Classes\DataBase.cpp" />
     <ClCompile Include="Classes\General.cpp" />
+    <ClCompile Include="Classes\GraphUi.cpp" />
     <ClCompile Include="Classes\MolybdeenBatchUI.cpp" />
     <ClCompile Include="Classes\pdf.cpp" />
     <ClCompile Include="Classes\qcustomplot.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="main.cpp" />
     <QtUic Include="UI Files\AddDose.ui" />
     <QtUic Include="UI Files\AddPatient.ui" />
+    <QtUic Include="UI Files\GraphUI.ui" />
     <QtUic Include="UI Files\KoeWare.ui" />
     <QtUic Include="UI Files\MolybdeenBatch.ui" />
     <QtUic Include="UI Files\SelectDateDialog.ui" />
@@ -129,6 +131,7 @@
     <ClInclude Include="Headers\DataBase.h" />
     <QtMoc Include="Headers\pdf.h" />
     <QtMoc Include="Headers\qcustomplot.h" />
+    <QtMoc Include="Headers\GraphUi.h" />
     <ClInclude Include="Headers\Screen.h" />
     <ClInclude Include="Headers\SettingsUI.h" />
     <ClInclude Include="Headers\SimRun.h" />
