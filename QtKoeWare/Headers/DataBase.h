@@ -131,12 +131,12 @@ public:
     int CountRows(std::string table, std::string column, std::string check_value);
     void DeleteTableContents(std::string table);
 
-    std::map<int, std::map<std::string, std::string>> getBatches(const int& batchid);
-    std::map<int, std::map<std::string, std::string>> getTeBatches(const int& moBatchId);
+    std::map<int, std::map<std::string, std::string>> getBatches(const int& batchid, bool sim);
+    std::map<int, std::map<std::string, std::string>> getTeBatches(const int& moBatchId, bool sim);
     std::map<int, std::map<std::string, std::string>> getTe(const int& teBatchId);
     std::map<int, std::map<std::string, std::string>> getDoseToPatient(const int& teBatchId);
     std::map<int, std::map<std::string, std::string>> getPatient(const int& patientId);
-    std::map<int, std::map<std::string, std::string>> getDosePatientInfo(const int& teBatchId);
+    std::map<int, std::map<std::string, std::string>> getDosePatientInfo(const int& teBatchId, bool sim);
 
 
     //int newInt(std::string table, std::string value);

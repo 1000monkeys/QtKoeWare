@@ -39,5 +39,5 @@ void TestUI::Test3() {
 }
 
 void TestUI::createPdf() {
-	pdf->createPdf();
+	//pdf->createPdf();
 }
