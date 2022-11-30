@@ -4,13 +4,13 @@ Pdf::Pdf()
 {
 }
 
-void Pdf::createPdf() {
-    int lastBatchId = db->LastInt("batches", "batchId");
+void Pdf::createPdf(int batchId, bool sim) {
+    //int lastBatchId = db->LastInt("batches", "batchId");
 
     QString html;
-    std::map<int, std::map<std::string, std::string>> data = db->getTeBatches(lastBatchId);
+    std::map<int, std::map<std::string, std::string>> data = db->getTeBatches(batchId, sim);
     for (int i = 0; i < data.size(); i++) {
-        std::map<int, std::map<std::string, std::string>> data2 = db->getBatches(lastBatchId);
+        std::map<int, std::map<std::string, std::string>> data2 = db->getBatches(batchId, sim);
         html += "<table width=\"100%\" style=\"page-break-after: always; padding: 3 3 3 3;\"><tr><td colspan=9>";
         html += "<div align=\"left\"><h2>Molybdeen batch:</h2>";
         std::list<std::string> keys;
@@ -23,6 +23,9 @@ void Pdf::createPdf() {
         for (std::string k : keys) {
             html += "<th style=\"padding: 3 3 3 3;\">";
             html += QString::fromStdString(k);
+            if (k == "radioactivity") {
+                html += QString::fromStdString("(GBq)");
+            }
             html += "</th>";
         }
         html += "</tr>";
@@ -52,6 +55,9 @@ void Pdf::createPdf() {
         for (std::string k : keys) {
             html += "<th style=\"padding: 3 3 3 3;\">";
             html += QString::fromStdString(k);
+            if (k == "radioactivity") {
+                html += QString::fromStdString("(MBq)");
+            }
             html += "</th>";
         }
         html += "</tr>";
@@ -83,10 +89,13 @@ void Pdf::createPdf() {
         for (std::string k : keys) {
             html += "<th style=\"padding: 3 3 3 3;\">";
             html += QString::fromStdString(k);
+            if (k == "DoseRadioactivity") {
+                html += QString::fromStdString("(MBq)");
+            }
             html += "</th>";
         }
         html += "</tr>";
-        std::map<int, std::map<std::string, std::string>> data3 = db->getDosePatientInfo(std::stoi(data[i]["teBatchId"]));
+        std::map<int, std::map<std::string, std::string>> data3 = db->getDosePatientInfo(std::stoi(data[i]["teBatchId"]), sim);
         for (int i = 0; i < data3.size(); i++) {
             html += "<tr>";
             for (std::string k : keys) {
@@ -108,6 +117,7 @@ void Pdf::createPdf() {
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageOrientation(QPageLayout::Landscape);
+    QString filename = QString::number(batchId) + QString::fromStdString("-report-") + QDate::currentDate().toString() + QString::fromStdString(".pdf");
     printer.setOutputFileName(filename);
 
     document.print(&printer);

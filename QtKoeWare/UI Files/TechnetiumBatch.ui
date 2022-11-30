@@ -32,8 +32,8 @@
   <widget class="QLabel" name="moBatchLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>60</y>
+     <x>10</x>
+     <y>40</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -45,8 +45,8 @@
   <widget class="QLabel" name="radioActivityLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>120</y>
+     <x>10</x>
+     <y>100</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -58,8 +58,8 @@
   <widget class="QPushButton" name="teMeasureButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>120</y>
+     <x>250</x>
+     <y>100</y>
      <width>111</width>
      <height>21</height>
     </rect>
@@ -71,8 +71,8 @@
   <widget class="QLineEdit" name="moBatchLine">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>60</y>
+     <x>140</x>
+     <y>40</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -81,8 +81,8 @@
   <widget class="QLineEdit" name="teRadioactivityLine">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>120</y>
+     <x>140</x>
+     <y>100</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -91,8 +91,8 @@
   <widget class="QPushButton" name="teSubmitButton">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>180</y>
+     <x>180</x>
+     <y>160</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -104,8 +104,8 @@
   <widget class="QLabel" name="dateTimeLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>100</y>
+     <x>10</x>
+     <y>80</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -120,8 +120,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>99</y>
+     <x>140</x>
+     <y>79</y>
      <width>91</width>
      <height>22</height>
     </rect>
@@ -302,8 +302,8 @@
   <widget class="QTimeEdit" name="teTimeEdit">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>100</y>
+     <x>300</x>
+     <y>80</y>
      <width>61</width>
      <height>22</height>
     </rect>
@@ -312,8 +312,8 @@
   <widget class="QPushButton" name="selectBatchButton">
    <property name="geometry">
     <rect>
-     <x>271</x>
-     <y>58</y>
+     <x>251</x>
+     <y>38</y>
      <width>111</width>
      <height>24</height>
     </rect>
@@ -325,8 +325,8 @@
   <widget class="QLabel" name="teBatchLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>80</y>
+     <x>10</x>
+     <y>60</y>
      <width>121</width>
      <height>16</height>
     </rect>
@@ -338,8 +338,8 @@
   <widget class="QLineEdit" name="teBatchLine">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>80</y>
+     <x>140</x>
+     <y>60</y>
      <width>113</width>
      <height>21</height>
     </rect>
@@ -348,8 +348,8 @@
   <widget class="QPushButton" name="setDateButton">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>100</y>
+     <x>230</x>
+     <y>80</y>
      <width>71</width>
      <height>22</height>
     </rect>
@@ -361,8 +361,8 @@
   <widget class="QPushButton" name="checkAvailabilityButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>80</y>
+     <x>250</x>
+     <y>60</y>
      <width>111</width>
      <height>22</height>
     </rect>

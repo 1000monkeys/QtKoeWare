@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QtUiTools>
+#include <QtSql>
 
 #include "ui_PrintPDF.h"
 
@@ -18,8 +19,13 @@ public:
 
 private:
     Ui_PrintPDFUIFile printPDF;
+    QSqlQueryModel* model;
 
     void closeEvent(QCloseEvent* event);
     void search();
+    void createPDF();
+
+    void tableOnClick(const QModelIndex& index);
+    int rowId = NULL;
 };
 QT_END_NAMESPACE

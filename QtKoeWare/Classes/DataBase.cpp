@@ -152,17 +152,30 @@ QSqlError DataBase::initDb()
     return QSqlError();
 }
 
-std::map<int, std::map<std::string, std::string>> DataBase::getBatches(const int& batchid) {
+std::map<int, std::map<std::string, std::string>> DataBase::getBatches(const int& batchid, bool sim) {
     QSqlQuery q;
-
+    
     const auto GET_BATCH_DATA =
-        QLatin1String("SELECT * FROM batches WHERE batchId='") +
-        QLatin1String(std::to_string(batchid)) +
-        QLatin1String("';");
+            QLatin1String("SELECT * FROM batches WHERE batchId='") +
+            QLatin1String(std::to_string(batchid)) +
+            QLatin1String("';");
 
-    if (!q.prepare(GET_BATCH_DATA)) {
-        qDebug() << "Error on get batch data";
-        //return q.lastError();
+    const auto GET_BATCH_DATA_SIM =
+            QLatin1String("SELECT * FROM batchessim WHERE batchId='") +
+            QLatin1String(std::to_string(batchid)) +
+            QLatin1String("';");
+
+    if (sim) {
+        if (!q.prepare(GET_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+    else {
+        if (!q.prepare(GET_BATCH_DATA)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
     }
 
     std::map<int, std::map<std::string, std::string>> data;
@@ -243,17 +256,30 @@ std::map<int, std::map<std::string, std::string>> DataBase::getPatient(const int
     return data;
 }
 
-std::map<int, std::map<std::string, std::string>> DataBase::getTeBatches(const int& moBatchId) {
+std::map<int, std::map<std::string, std::string>> DataBase::getTeBatches(const int& moBatchId, bool sim) {
     QSqlQuery q;
+
+    const auto GET_TE_BATCH_DATA_SIM =
+        QLatin1String("SELECT * FROM tebatchessim WHERE moBatchId='") +
+        QLatin1String(std::to_string(moBatchId)) +
+        QLatin1String("';");
 
     const auto GET_TE_BATCH_DATA =
         QLatin1String("SELECT * FROM tebatches WHERE moBatchId='") +
         QLatin1String(std::to_string(moBatchId)) +
         QLatin1String("';");
-
-    if (!q.prepare(GET_TE_BATCH_DATA)) {
-        qDebug() << "Error on get batch data";
-        //return q.lastError();
+    
+    if (sim) {
+        if (!q.prepare(GET_TE_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+    else {
+        if (!q.prepare(GET_TE_BATCH_DATA)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
     }
 
     std::map<int, std::map<std::string, std::string>> data;
@@ -302,8 +328,26 @@ std::map<int, std::map<std::string, std::string>> DataBase::getTe(const int& teB
     return data;
 }
 
-std::map<int, std::map<std::string, std::string>> DataBase::getDosePatientInfo(const int& teBatchId) {
+std::map<int, std::map<std::string, std::string>> DataBase::getDosePatientInfo(const int& teBatchId, bool sim) {
     QSqlQuery q;
+
+    const auto GET_TE_BATCH_DATA_SIM = 
+        QLatin1String("SELECT ") +
+        QLatin1String("patientssim.patientId AS PatientId, ") +
+        QLatin1String("patientssim.name AS PatientName, ") +
+        QLatin1String("patientssim.birthdate AS PatientBirthDate, ") +
+        QLatin1String("patientssim.length AS PatientLength, ") +
+        QLatin1String("patientssim.weight AS PatientWeight, ") +
+        QLatin1String("patientssim.sex AS PatientSex, ") +
+        QLatin1String("dosetopatientsim.injectionDate AS InjectionDate, ") +
+        QLatin1String("dosetopatientsim.injectionTime AS InjectionTime, ") +
+        QLatin1String("dosetopatientsim.doseRadioactivity AS DoseRadioactivity ") +
+        QLatin1String("FROM tebatchessim ") +
+        QLatin1String("INNER JOIN dosetopatientsim ON tebatchessim.id = dosetopatientsim.teBatchId ") +
+        QLatin1String("INNER JOIN patientssim ON dosetopatientsim.patientId = patientssim.patientId ") +
+        QLatin1String("WHERE tebatchessim.teBatchId = ") +
+        QLatin1String(std::to_string(teBatchId)) +
+        QLatin1String(";");
 
     const auto GET_TE_BATCH_DATA =
         QLatin1String("SELECT ") +
@@ -323,9 +367,18 @@ std::map<int, std::map<std::string, std::string>> DataBase::getDosePatientInfo(c
         QLatin1String(std::to_string(teBatchId)) +
         QLatin1String(";");
 
-    if (!q.prepare(GET_TE_BATCH_DATA)) {
-        qDebug() << "Error on get info";
-        //return q.lastError();
+    if (sim) {
+        if (!q.prepare(GET_TE_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get info";
+            //return q.lastError();
+        }
+    }
+    else
+    {
+        if (!q.prepare(GET_TE_BATCH_DATA)) {
+            qDebug() << "Error on get info";
+            //return q.lastError();
+        }
     }
 
     std::map<int, std::map<std::string, std::string>> data;

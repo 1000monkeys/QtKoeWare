@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
-    <height>500</height>
+    <width>823</width>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="searchButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>190</x>
       <y>10</y>
       <width>75</width>
-      <height>24</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -30,7 +30,7 @@
    <widget class="QLineEdit" name="searchLineEdit">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>70</x>
       <y>10</y>
       <width>113</width>
       <height>21</height>
@@ -40,24 +40,76 @@
    <widget class="QTableView" name="tableView">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>40</y>
-      <width>751</width>
-      <height>411</height>
+      <width>741</width>
+      <height>401</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="printButton_2">
+   <widget class="QPushButton" name="printButton">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>642</x>
       <y>10</y>
-      <width>75</width>
-      <height>24</height>
+      <width>71</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Print PDF</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="selectedBatch">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>522</x>
+      <y>10</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>10</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Selected batch:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>8</x>
+      <y>10</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search:</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="simulationsCheckBox">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>10</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Simulations</string>
     </property>
    </widget>
   </widget>
@@ -66,7 +118,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>775</width>
+     <width>823</width>
      <height>22</height>
     </rect>
    </property>

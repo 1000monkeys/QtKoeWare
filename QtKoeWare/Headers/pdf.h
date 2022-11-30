@@ -10,10 +10,12 @@ class Pdf {
 
 public:
 	Pdf();
-	void createPdf();
+	void createPdf(int batchId, bool sim);
 
 private:
-	QString filename = "output.pdf";
-
 	DataBase* db = new DataBase;
+
+	void okPress();
+	void tableOnClick(const QModelIndex& index);
+	void setRowId();
 };
