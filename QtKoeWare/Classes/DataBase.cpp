@@ -248,6 +248,171 @@ std::map<std::string, std::string> DataBase::getSettings()
     return settings;
 }
 
+std::map<int, std::map<std::string, std::string>> DataBase::getBatches(const int& batchid, bool sim) {
+    QSqlQuery q;
+
+    const auto GET_BATCH_DATA =
+        QLatin1String("SELECT * FROM batches WHERE batchId='") +
+        QLatin1String(std::to_string(batchid)) +
+        QLatin1String("';");
+
+    const auto GET_BATCH_DATA_SIM =
+        QLatin1String("SELECT * FROM batchessim WHERE batchId='") +
+        QLatin1String(std::to_string(batchid)) +
+        QLatin1String("';");
+
+    if (sim) {
+        if (!q.prepare(GET_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+    else {
+        if (!q.prepare(GET_BATCH_DATA)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["id"] = q.value("id").toString().toStdString();
+            data[count]["batchId"] = q.value("batchId").toString().toStdString();
+            data[count]["dateTimeProduced"] = q.value("dateTimeProduced").toString().toStdString();
+            data[count]["dateTimeMeasured"] = q.value("dateTimeMeasured").toString().toStdString();
+            data[count]["radioactivity"] = q.value("radioactivity").toString().toStdString();
+            qDebug() << count;
+            qDebug() << "Found batch";
+            count++;
+        }
+    }
+    return data;
+}
+
+std::map<int, std::map<std::string, std::string>> DataBase::getDosePatientInfo(const int& teBatchId, bool sim) {
+    QSqlQuery q;
+
+    const auto GET_TE_BATCH_DATA_SIM =
+        QLatin1String("SELECT ") +
+        QLatin1String("patientssim.patientId AS PatientId, ") +
+        QLatin1String("patientssim.name AS PatientName, ") +
+        QLatin1String("patientssim.birthdate AS PatientBirthDate, ") +
+        QLatin1String("patientssim.length AS PatientLength, ") +
+        QLatin1String("patientssim.weight AS PatientWeight, ") +
+        QLatin1String("patientssim.sex AS PatientSex, ") +
+        QLatin1String("dosetopatientsim.injectionDate AS InjectionDate, ") +
+        QLatin1String("dosetopatientsim.injectionTime AS InjectionTime, ") +
+        QLatin1String("dosetopatientsim.doseRadioactivity AS DoseRadioactivity ") +
+        QLatin1String("FROM tebatchessim ") +
+        QLatin1String("INNER JOIN dosetopatientsim ON tebatchessim.id = dosetopatientsim.teBatchId ") +
+        QLatin1String("INNER JOIN patientssim ON dosetopatientsim.patientId = patientssim.patientId ") +
+        QLatin1String("WHERE tebatchessim.teBatchId = ") +
+        QLatin1String(std::to_string(teBatchId)) +
+        QLatin1String(";");
+
+    const auto GET_TE_BATCH_DATA =
+        QLatin1String("SELECT ") +
+        QLatin1String("patients.patientId AS PatientId, ") +
+        QLatin1String("patients.name AS PatientName, ") +
+        QLatin1String("patients.birthdate AS PatientBirthDate, ") +
+        QLatin1String("patients.length AS PatientLength, ") +
+        QLatin1String("patients.weight AS PatientWeight, ") +
+        QLatin1String("patients.sex AS PatientSex, ") +
+        QLatin1String("dosetopatient.injectionDate AS InjectionDate, ") +
+        QLatin1String("dosetopatient.injectionTime AS InjectionTime, ") +
+        QLatin1String("dosetopatient.doseRadioactivity AS DoseRadioactivity ") +
+        QLatin1String("FROM tebatches ") +
+        QLatin1String("INNER JOIN dosetopatient ON tebatches.id = dosetopatient.teBatchId ") +
+        QLatin1String("INNER JOIN patients ON dosetopatient.patientId = patients.patientId ") +
+        QLatin1String("WHERE tebatches.teBatchId=") +
+        QLatin1String(std::to_string(teBatchId)) +
+        QLatin1String(";");
+
+    if (sim) {
+        if (!q.prepare(GET_TE_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get info";
+            //return q.lastError();
+        }
+    }
+    else
+    {
+        if (!q.prepare(GET_TE_BATCH_DATA)) {
+            qDebug() << "Error on get info";
+            //return q.lastError();
+        }
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["MolybdeenBatchId"] = q.value("MolybdeenBatchId").toString().toStdString();
+            data[count]["MolybdeenProduceDateTime"] = q.value("MolybdeenProduceDateTime").toString().toStdString();
+            data[count]["MolybdeenMeasureDateTime"] = q.value("MolybdeenMeasureDateTime").toString().toStdString();
+            data[count]["MolybdeenRadioActivity"] = q.value("MolybdeenRadioActivity").toString().toStdString();
+            data[count]["TechnetiumBatchId"] = q.value("TechnetiumBatchId").toString().toStdString();
+            data[count]["TechnetiumProduceDateTime"] = q.value("TechnetiumProduceDateTime").toString().toStdString();
+            data[count]["TechnetiumRadioActivity"] = q.value("TechnetiumRadioActivity").toString().toStdString();
+            data[count]["PatientId"] = q.value("PatientId").toString().toStdString();
+            data[count]["PatientName"] = q.value("PatientName").toString().toStdString();
+            data[count]["PatientBirthDate"] = q.value("PatientBirthDate").toString().toStdString();
+            data[count]["PatientLength"] = q.value("PatientLength").toString().toStdString();
+            data[count]["PatientWeight"] = q.value("PatientWeight").toString().toStdString();
+            data[count]["PatientSex"] = q.value("PatientSex").toString().toStdString();
+            data[count]["InjectionDate"] = q.value("InjectionDate").toString().toStdString();
+            data[count]["InjectionTime"] = q.value("InjectionTime").toString().toStdString();
+            data[count]["DoseRadioactivity"] = q.value("DoseRadioactivity").toString().toStdString();
+            qDebug() << count;
+            count++;
+        }
+    }
+    return data;
+}
+
+std::map<int, std::map<std::string, std::string>> DataBase::getTeBatches(const int& moBatchId, bool sim) {
+    QSqlQuery q;
+
+    const auto GET_TE_BATCH_DATA_SIM =
+        QLatin1String("SELECT * FROM tebatchessim WHERE moBatchId='") +
+        QLatin1String(std::to_string(moBatchId)) +
+        QLatin1String("';");
+
+    const auto GET_TE_BATCH_DATA =
+        QLatin1String("SELECT * FROM tebatches WHERE moBatchId='") +
+        QLatin1String(std::to_string(moBatchId)) +
+        QLatin1String("';");
+
+    if (sim) {
+        if (!q.prepare(GET_TE_BATCH_DATA_SIM)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+    else {
+        if (!q.prepare(GET_TE_BATCH_DATA)) {
+            qDebug() << "Error on get batch data";
+            //return q.lastError();
+        }
+    }
+
+    std::map<int, std::map<std::string, std::string>> data;
+    if (q.exec()) {
+        int count = 0;
+        while (q.next()) {
+            data[count]["id"] = q.value("id").toString().toStdString();
+            data[count]["moBatchId"] = q.value("moBatchId").toString().toStdString();
+            data[count]["teBatchId"] = q.value("teBatchId").toString().toStdString();
+            data[count]["dateTimeProduced"] = q.value("dateTimeProduced").toString().toStdString();
+            data[count]["radioactivity"] = q.value("radioactivity").toString().toStdString();
+            qDebug() << count;
+            count++;
+        }
+    }
+    return data;
+}
+
 QVariant DataBase::addMolybdeenBatch(const int& batchid, const QDateTime& dateTimeProduced, const QDateTime& dateTimeMeasured, const int& radioactivity)
 {
     QSqlQuery q;

@@ -69,6 +69,7 @@
     </property>
     <addaction name="settings"/>
     <addaction name="gotoGraph"/>
+    <addaction name="printPDF"/>
    </widget>
    <addaction name="menuBatch"/>
    <addaction name="menuPatient"/>
@@ -124,6 +125,11 @@
   <action name="gotoGraph">
    <property name="text">
     <string>Graphs</string>
+   </property>
+  </action>
+  <action name="printPDF">
+   <property name="text">
+    <string>Pdf</string>
    </property>
   </action>
  </widget>

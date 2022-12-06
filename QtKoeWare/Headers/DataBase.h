@@ -112,6 +112,11 @@ public:
     std::map<std::string, std::string> getDefaultSettings();
     std::map<std::string, std::string> getSettings();
 
+
+    std::map<int, std::map<std::string, std::string>> getBatches(const int& batchid, bool sim);
+    std::map<int, std::map<std::string, std::string>> getTeBatches(const int& moBatchId, bool sim);
+    std::map<int, std::map<std::string, std::string>> getDosePatientInfo(const int& teBatchId, bool sim);
+
     // All simualation tables
     QVariant addPatientToSim(const QString& name, const int& length, const int& weight, const QDate& birthdate, const int& sex);
     QVariant addMolybdeenBatchToSim(const int& batchid, const QDateTime& dateTimeProduced, const QDateTime& dateTimeMeasured, const int& radioactivity);

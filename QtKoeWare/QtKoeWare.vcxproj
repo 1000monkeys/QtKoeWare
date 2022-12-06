@@ -96,6 +96,7 @@
     <ClCompile Include="Classes\GraphUi.cpp" />
     <ClCompile Include="Classes\MolybdeenBatchUI.cpp" />
     <ClCompile Include="Classes\pdf.cpp" />
+    <ClCompile Include="Classes\PrintPDF.cpp" />
     <ClCompile Include="Classes\qcustomplot.cpp" />
     <ClCompile Include="Classes\SelectDateDialog.cpp" />
     <ClCompile Include="Classes\SelectPatientDialog.cpp" />
@@ -129,9 +130,10 @@
   <ItemGroup>
     <ClInclude Include="Headers\CalcRadioActivity.h" />
     <ClInclude Include="Headers\DataBase.h" />
-    <QtMoc Include="Headers\pdf.h" />
     <QtMoc Include="Headers\qcustomplot.h" />
     <QtMoc Include="Headers\GraphUi.h" />
+    <QtMoc Include="Headers\PrintPDF.h" />
+    <ClInclude Include="Headers\pdf.h" />
     <ClInclude Include="Headers\Screen.h" />
     <ClInclude Include="Headers\SettingsUI.h" />
     <ClInclude Include="Headers\SimRun.h" />

@@ -85,13 +85,16 @@
     <ClCompile Include="Classes\TestClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\pdf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\qcustomplot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Classes\GraphUi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\pdf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\PrintPDF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,13 +164,13 @@
     <QtMoc Include="Headers\TestClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Headers\pdf.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="Headers\qcustomplot.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Headers\GraphUi.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Headers\PrintPDF.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -185,6 +188,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\SimRun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\pdf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

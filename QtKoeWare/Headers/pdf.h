@@ -4,13 +4,18 @@
 #include <QString>
 #include <QTextDocument>
 #include <QPrinter>
+#include "DataBase.h"
 
-QT_BEGIN_NAMESPACE
-class Pdf : public QMainWindow {
-	Q_OBJECT
+class Pdf {
 
 public:
-	Pdf(QMainWindow* parent = nullptr);
-	void run();
+	Pdf();
+	void createPdf(int batchId, bool sim);
+
+private:
+	DataBase* db = new DataBase;
+
+	void okPress();
+	void tableOnClick(const QModelIndex& index);
+	void setRowId();
 };
-QT_END_NAMESPACE
