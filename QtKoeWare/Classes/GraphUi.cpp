@@ -10,77 +10,81 @@ GraphUI::GraphUI(QMainWindow* parent)
 	setWindowTitle("KoeWare");
 	setMinimumSize(750, 500);
 	graphui.setupUi(this);
-	setGraph(0, 0, true);
+	int lastBatchId = db->LastInt("batches", "bathId");
+	if (lastBatchId != 0) {
+		setMolybdenumGraph(lastBatchId, false);
+	}
+
+	/*TEST*/
+	int id = db->LastInt("batchessim", "batchId");
+	setMolybdenumGraph(id, true);
+	/*TEST*/
+	
+	
 	
 }
 
-void GraphUI::setGraph(int moBatch, int teBatch, bool simGraph) {
-	int moBatchId = 0;
+void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph) {
 	int startactivity = 0;
 	QString measuredDateTimeString;
 	graphui.plot->addGraph();
-	if (moBatch == 0 && teBatch == 0) {
-		if (!simGraph){
-			moBatchId = db->LastInt("batches", "batchId");
-			measuredDateTimeString = db->LastDateTime("batches", "dateTimeMeasured");
-			startactivity = db->LastInt("batches", "radioactivity");
-			if (measuredDateTimeString == "no val") {
-				return; 
-			}
+	if (!simGraph){
+		measuredDateTimeString = db->LastDateTime("batches", "dateTimeMeasured");
+		startactivity = db->LastInt("batches", "radioactivity");
+		if (measuredDateTimeString == "no val") {
+			return; 
 		}
-		else {
-			moBatchId = db->LastInt("batchessim", "batchId");
-			startactivity = db->LastInt("batchessim", "radioactivity");
-			measuredDateTimeString = db->LastDateTime("batchessim", "dateTimeMeasured");
-			if (measuredDateTimeString == "no val") {
-				return;
-			}
-		}
-
-		//Get start time and endtime. Starttime is measured time. Endtime is time of last activity (if no new mo batch)
-		QDateTime measureDateTime = measureDateTime.fromString(measuredDateTimeString, "yyyy-MM-ddTHH:mm:ss.zzz");
-		QDateTime timeNow = getTimeNow(true);
-		qDebug() << measureDateTime << " = measuredt";
-		qDebug() << timeNow << " = timeNow";
-		double starttime = measureDateTime.toSecsSinceEpoch();
-		double endtime = timeNow.toSecsSinceEpoch();
-
-		qDebug() << "starttime = " << starttime;
-		qDebug() << "endtime = " << endtime;
-		
-
-		// Set plot data
-		
-		qDebug() << startactivity << " = startactivity";
-		QVector<QCPGraphData> timedel(101);
-		double plotpoints = 100;
-		double timeDelta = (endtime - starttime) / plotpoints;
-		double halflife = 66 * 3600;
-
-		for (int i = 0; i < 101; ++i) {
-			timedel[i].key = starttime + (i * timeDelta);
-			timedel[i].value = startactivity * pow(0.5, (i * timeDelta) / halflife);
-			QDateTime checktime = QDateTime::fromSecsSinceEpoch(0);
-			checktime = checktime.addSecs(timedel[i].key);
-			qDebug() << "x: " << checktime << "y: " << timedel[i].value;
-		}
-		graphui.plot->graph()->data()->set(timedel);
-
-		// Set date on x-axis
-		QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
-		dateTicker->setDateTimeFormat("d. MMMM\nyyyy\nHH:mm");
-		graphui.plot->xAxis->setTicker(dateTicker);
-		graphui.plot->xAxis->setRange(starttime, endtime);
-		
-
-		// Set y-axix
-		graphui.plot->yAxis->setRange(0, startactivity + 20);
-
-
-		// plot graph
-		graphui.plot->replot();
-		
 	}
+	else {
+		startactivity = db->LastInt("batchessim", "radioactivity");
+		measuredDateTimeString = db->LastDateTime("batchessim", "dateTimeMeasured");
+		if (measuredDateTimeString == "no val") {
+			return;
+		}
+	}
+
+	//Get start time and endtime. Starttime is measured time. Endtime is time of last activity (if no new mo batch)
+	QDateTime measureDateTime = measureDateTime.fromString(measuredDateTimeString, "yyyy-MM-ddTHH:mm:ss.zzz");
+	QDateTime timeNow = getTimeNow(true);
+	double starttime = measureDateTime.toSecsSinceEpoch();
+	double endtime = timeNow.toSecsSinceEpoch();
+
+
+	// Set plot data
+	QVector<QCPGraphData> timedel(101);
+	double plotpoints = 100;
+	double timeDelta = (endtime - starttime) / plotpoints;
+	double halflife = 66 * 3600;
+
+	for (int i = 0; i < 101; ++i) {
+		timedel[i].key = starttime + (i * timeDelta);
+		timedel[i].value = startactivity * pow(0.5, (i * timeDelta) / halflife);
+		QDateTime checktime = QDateTime::fromSecsSinceEpoch(0);
+		checktime = checktime.addSecs(timedel[i].key);
+	}
+	graphui.plot->graph()->data()->set(timedel);
+
+	// Set date on x-axis
+	QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
+	dateTicker->setDateTimeFormat("d-MM-yyyy\nHH:mm");
+	dateTicker->setTickCount(7);
+	dateTicker->setTickOrigin(starttime);
+	graphui.plot->xAxis->setTicker(dateTicker);
+	graphui.plot->xAxis->setRange(starttime, endtime);
+		
+
+	// Set y-axix
+	graphui.plot->yAxis->setRange(0, startactivity + 20);
+
+	//Set graph Title
+	graphui.plot->plotLayout()->insertRow(0);
+	QCPTextElement* title = new QCPTextElement(graphui.plot, QString("Molybdenumbatch BatchID: ") + QString::number(moBatch), QFont("Times", 20));
+	graphui.plot->plotLayout()->addElement(0, 0, title);
+
+	// plot graph
+	graphui.plot->replot();
+		
+
 }
 
 QDateTime GraphUI::getTimeNow(bool simGraph) {

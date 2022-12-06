@@ -18,7 +18,8 @@ public:
 	void closeEvent(QCloseEvent* event);
 	void selectMoBatch();
 	void selectTeBatch();
-	void setGraph(int moBatchId = 0, int teBatchId = 0, bool simGraph = false);
+	void setMolybdenumGraph(int moBatchId = 0, bool simGraph = false);
+	void setTechnetiumGraph(int teBatch = 0, bool simGraph = false);
 	QDateTime getTimeNow(bool simGraph = false);
 
 private:
