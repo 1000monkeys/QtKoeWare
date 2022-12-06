@@ -113,6 +113,7 @@
     <QtUic Include="UI Files\GraphUI.ui" />
     <QtUic Include="UI Files\KoeWare.ui" />
     <QtUic Include="UI Files\MolybdeenBatch.ui" />
+    <QtUic Include="UI Files\PrintPDF.ui" />
     <QtUic Include="UI Files\SelectDateDialog.ui" />
     <QtUic Include="UI Files\SelectPatientDialog.ui" />
     <QtUic Include="UI Files\SelectTableDialog.ui" />
