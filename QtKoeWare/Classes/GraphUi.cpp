@@ -12,40 +12,49 @@ GraphUI::GraphUI(QMainWindow* parent)
 	graphui.setupUi(this);
 	int lastBatchId = db->LastInt("batches", "bathId");
 	if (lastBatchId != 0) {
-		setMolybdenumGraph(lastBatchId, false);
+		setMolybdenumGraph(lastBatchId, false, true);
+		qDebug() << "hier ook heen";
 	}
 
 	/*TEST*/
 	int id = db->LastInt("batchessim", "batchId");
-	setMolybdenumGraph(id, true);
+	setMolybdenumGraph(id, true, true);
 	/*TEST*/
-	
-	
-	
 }
 
-void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph) {
+void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch) {
 	int startactivity = 0;
 	QString measuredDateTimeString;
 	graphui.plot->addGraph();
 	if (!simGraph){
-		measuredDateTimeString = db->LastDateTime("batches", "dateTimeMeasured");
-		startactivity = db->LastInt("batches", "radioactivity");
+		measuredDateTimeString = db->GetdbDateTime("batches", "dateTimeMeasured", "batchId", std::to_string(moBatch));
+		startactivity = db->GetdbInt("batches", "radioactivity", "batchId", std::to_string(moBatch));
 		if (measuredDateTimeString == "no val") {
 			return; 
 		}
 	}
 	else {
-		startactivity = db->LastInt("batchessim", "radioactivity");
-		measuredDateTimeString = db->LastDateTime("batchessim", "dateTimeMeasured");
+		measuredDateTimeString = db->GetdbDateTime("batchessim", "dateTimeMeasured", "batchId", std::to_string(moBatch));
+		startactivity = db->GetdbInt("batchessim", "radioactivity", "batchId", std::to_string(moBatch));
 		if (measuredDateTimeString == "no val") {
 			return;
 		}
 	}
 
 	//Get start time and endtime. Starttime is measured time. Endtime is time of last activity (if no new mo batch)
+	QDateTime timeNow;
 	QDateTime measureDateTime = measureDateTime.fromString(measuredDateTimeString, "yyyy-MM-ddTHH:mm:ss.zzz");
-	QDateTime timeNow = getTimeNow(true);
+	if (latestBatch) {
+		if (simGraph) {
+			timeNow = getTimeNow(true);
+		}
+		else {
+			timeNow = getTimeNow(false);
+		}	
+	}
+	else {
+		timeNow = measureDateTime.addDays(7);
+	}
 	double starttime = measureDateTime.toSecsSinceEpoch();
 	double endtime = timeNow.toSecsSinceEpoch();
 
@@ -86,6 +95,38 @@ void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph) {
 		
 
 }
+
+void GraphUI::setTechnetiumGraph(int batchId, bool simGraph, bool latestBatch) {
+	int entries = 0;
+	int moBatchId = db->GetdbInt("tebatches", "moBatchId", "teBatchid", std::to_string(batchId));
+	QList<QVariant> batchesDtList;
+	QList<QVariant> bachesActivityList;
+
+	if (simGraph){
+		batchesDtList = db->GetAllRowsForValue("tebatchessim", "dateTimeProduced", "moBatchId", std::to_string(moBatchId));
+		bachesActivityList = db->GetAllRowsForValue("tebatchessim", "radioactivity", "moBatchId", std::to_string(moBatchId));
+	}
+	else {
+		qDebug() << "no db entry found for graph";
+		return;
+	}
+	int pointsPerBatch = 50;
+	int plotpoints = batchesDtList.count() * pointsPerBatch;
+	double halflife = 6 * 3600;
+	QVector<QCPGraphData> timedel(plotpoints);
+	
+	for (int i = 0; i < batchesDtList.count() - 1; ++i) {
+		double starttime = batchesDtList[i].toDateTime().toSecsSinceEpoch();
+		double endtime = batchesDtList[i + 1].toDateTime().toSecsSinceEpoch();
+		double timeDelta = (endtime - starttime) / pointsPerBatch;
+		for (int indexPoint = i; (indexPoint * 50) < (indexPoint * 50 + 50); ++indexPoint) {
+			timedel[indexPoint].key = 
+		}
+
+	}
+	
+}
+
 
 QDateTime GraphUI::getTimeNow(bool simGraph) {
 	QString lastPatientDateString;

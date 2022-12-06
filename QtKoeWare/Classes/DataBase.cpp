@@ -902,8 +902,8 @@ int DataBase::GetLatestSetting(std::string setting_name) {
     return val;
 }
 
-QDateTime DataBase::GetdbDateTime(std::string table, std::string value, std::string known_index, std::string known_value) {
-    QDateTime dt;
+QString DataBase::GetdbDateTime(std::string table, std::string value, std::string known_index, std::string known_value) {
+    QString dt;
     const auto FIND_DT_SQL = QLatin1String("SELECT ") +
         QLatin1String(value) +
         QLatin1String(" FROM ") +
@@ -918,10 +918,10 @@ QDateTime DataBase::GetdbDateTime(std::string table, std::string value, std::str
     q.prepare(FIND_DT_SQL);
     q.exec();
     while (q.next()) {
-        dt = q.value(QLatin1String(value)).toDateTime();
+        dt = q.value(QLatin1String(value)).toString();
         return dt;
     }
-    dt = QDateTime::currentDateTime();
+    dt = "no val";
     return dt;
 }
 
@@ -985,6 +985,34 @@ int DataBase::CountRows(std::string table, std::string column, std::string check
 
     return rows;
 }
+
+QList<QVariant> DataBase::GetAllRowsForValue(std::string table, std::string value, std::string column, std::string known_value) {
+    QList<QVariant> dtList;
+    const auto GET_ROWS_FOR_VALUE = 
+        QLatin1String("SELECT ") +
+        QLatin1String(value) +
+        QLatin1String(" FROM ") +
+        QLatin1String(table) +
+        QLatin1String(" WHERE ") +
+        QLatin1String(column) +
+        QLatin1String("= '") +
+        QLatin1String(known_value) +
+        QLatin1String("';");
+
+    QSqlQuery q;
+
+    q.prepare(GET_ROWS_FOR_VALUE);
+    q.exec();
+
+    
+    while (q.next()) {
+        dtList.append(q.value(QLatin1String(value)));
+    }
+
+    return dtList;
+}
+
+
 
 void DataBase::DeleteTableContents(std::string table) {
     const auto DELETE_TABLE =

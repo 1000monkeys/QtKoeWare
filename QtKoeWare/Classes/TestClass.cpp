@@ -52,8 +52,13 @@ void TestUI::resetInputs() {
 }
 
 void TestUI::Test1() {
-    graph->getTimeNow(true);
-    qDebug() << "time now: " << graph->getTimeNow(true);
+   QList<QVariant> list = db->GetAllRowsForValue("tebatchessim", "dateTimeProduced", "moBatchId", std::to_string(15));
+   QList<QVariant>::iterator i;
+   for (i = list.begin(); i != list.end(); ++i) {
+       qDebug() << i->toDateTime();
+   }
+
+
 }
 
 void TestUI::Test2() {

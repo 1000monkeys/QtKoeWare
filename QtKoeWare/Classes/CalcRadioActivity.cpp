@@ -8,7 +8,8 @@
 
 double RadioActivityCalculator::elapsedHours(int BatchId) {
 	std::string Batch = std::to_string(BatchId);
-	QDateTime startDt = db->GetdbDateTime("batches", "dateTimeMeasured", "batchId", Batch);
+	QString startDtString = db->GetdbDateTime("batches", "dateTimeMeasured", "batchId", Batch);
+	QDateTime startDt = startDt.fromString(startDtString, "yyyy-MM-ddTHH:mm:ss.zzz");
 	QDateTime currdt = QDateTime::currentDateTime();
 	QTime currtime = QTime::currentTime();
 	double elapsed_days = startDt.daysTo(currdt) * 24;

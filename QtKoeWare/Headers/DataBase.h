@@ -133,11 +133,12 @@ public:
     QString LastDateString(std::string table, std::string value);
     QString LastTimeString(std::string talbe, std::string value);
     int GetdbInt(std::string table, std::string value, std::string known_index, std::string know_value);
-    QDateTime GetdbDateTime(std::string table, std::string value, std::string known_index, std::string known_value);
+    QString GetdbDateTime(std::string table, std::string value, std::string known_index, std::string known_value);
     QList<QList<QVariant>> GetWhere(std::string table, QList<std::string> values, std::string known_index, std::string known_value);
     int GetLatestSetting(std::string setting_name);
     int CountRows(std::string table, std::string column, std::string check_value);
     void DeleteTableContents(std::string table);
+    QList<QVariant> GetAllRowsForValue(std::string table, std::string value, std::string column, std::string known_value);
 
     //int newInt(std::string table, std::string value);
 };
