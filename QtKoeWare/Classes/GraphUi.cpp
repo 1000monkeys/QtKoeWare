@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../Headers/GraphUi.h"
+#include "../Headers/SelectTableDialog.h"
 
 
 
@@ -20,8 +21,8 @@ GraphUI::GraphUI(QMainWindow* parent)
 	setMolybdenumGraph(id, true);
 	/*TEST*/
 	
-	
-	
+	connect(graphui.selectMoButton, &QPushButton::released, this, &GraphUI::selectMoBatch);
+	connect(graphui.selectTeButton, &QPushButton::released, this, &GraphUI::selectTeBatch);
 }
 
 void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph) {
@@ -158,7 +159,33 @@ void GraphUI::selectMoBatch() {
 }
 
 void GraphUI::selectTeBatch() {
+	// CHANGE TO TE BATCH
+	SelectTableDialog tableDialog = new SelectTableDialog(this);
+	tableDialog.setModal(true);
 
+	QSqlQueryModel* model = new QSqlQueryModel;
+	if (graphui.simulationCheckBox->isChecked()) {
+		model->setQuery("SELECT * FROM tebatchessim;");
+	}
+	else {
+		model->setQuery("SELECT * FROM tebatches;");
+	}
+	//model->setQuery("SELECT * FROM tebatches;");
+	model->setHeaderData(0, Qt::Horizontal, tr("Row ID"));
+	model->setHeaderData(1, Qt::Horizontal, tr("Molybdeen Batch ID"));
+	model->setHeaderData(2, Qt::Horizontal, tr("Technetium Batch ID"));
+	model->setHeaderData(3, Qt::Horizontal, tr("Date/Time produced"));
+	model->setHeaderData(4, Qt::Horizontal, tr("Radioactivity(GBq)"));
+	tableDialog.setModel(model);
+
+	tableDialog.exec();
+	if (tableDialog.getRowId() != NULL) {
+		int batchId = db->GetdbInt("tebatches", "teBatchId", "id", std::to_string(tableDialog.getRowId()));
+		graphui.teLineEdit->setText(QString::number(batchId));
+	}
+	else {
+		graphui.teLineEdit->setText("");
+	}
 }
 
 
