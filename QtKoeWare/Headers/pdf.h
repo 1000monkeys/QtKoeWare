@@ -18,4 +18,5 @@ private:
 	void okPress();
 	void tableOnClick(const QModelIndex& index);
 	void setRowId();
+	std::wstring ExePath();
 };

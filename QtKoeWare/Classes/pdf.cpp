@@ -1,4 +1,11 @@
 #include "../Headers/pdf.h"
+#include <windows.h>
+#include <shellapi.h>
+
+#include <string>
+#include <codecvt>
+#include <locale>
+using convert_t = std::codecvt_utf8<wchar_t>;
 
 Pdf::Pdf()
 {
@@ -117,8 +124,21 @@ void Pdf::createPdf(int batchId, bool sim) {
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageOrientation(QPageLayout::Landscape);
-    QString filename = QString::number(batchId) + QString::fromStdString("-report-") + QDate::currentDate().toString() + QString::fromStdString(".pdf");
+    QString filename = QString::number(batchId) + QString::fromStdString("-report-") + QDate::currentDate().toString("yyyy-MM-dd") + QString::fromStdString(".pdf");
     printer.setOutputFileName(filename);
 
     document.print(&printer);
+
+
+    std::string new_str = std::filesystem::current_path().generic_string().append("/" + filename.toStdString());
+    qDebug() << QString::fromStdString(new_str);
+    std::string op = std::string("start ").append(new_str);
+    system(op.c_str());
+}
+
+std::wstring Pdf::ExePath() {
+    TCHAR buffer[MAX_PATH] = { 0 };
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
+    return std::wstring(buffer).substr(0, pos);
 }
