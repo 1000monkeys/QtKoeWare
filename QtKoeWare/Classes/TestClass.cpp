@@ -62,8 +62,7 @@ void TestUI::Test1() {
 }
 
 void TestUI::Test2() {
-	sim->MolybdeenBatch();
-	sim->TechnetiumBatch();
+    graph->setTechnetiumGraph(5, true, true);
 }
 
 void TestUI::Test3() {

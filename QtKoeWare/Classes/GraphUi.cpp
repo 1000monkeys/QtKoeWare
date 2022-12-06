@@ -14,12 +14,12 @@ GraphUI::GraphUI(QMainWindow* parent)
 	int lastBatchId = db->LastInt("batches", "bathId");
 	if (lastBatchId != 0) {
 		setMolybdenumGraph(lastBatchId, false, true);
-		qDebug() << "hier ook heen";
 	}
 
 	/*TEST*/
 	int id = db->LastInt("batchessim", "batchId");
 	setMolybdenumGraph(id, true, true);
+	setTechnetiumGraph(5, true, true);
 	/*TEST*/
 	
 	connect(graphui.selectMoButton, &QPushButton::released, this, &GraphUI::selectMoBatch);
@@ -102,33 +102,86 @@ void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch) {
 }
 
 void GraphUI::setTechnetiumGraph(int batchId, bool simGraph, bool latestBatch) {
-	int entries = 0;
-	int moBatchId = db->GetdbInt("tebatches", "moBatchId", "teBatchid", std::to_string(batchId));
-	QList<QVariant> batchesDtList;
-	QList<QVariant> bachesActivityList;
+	int moBatchId = db->GetdbInt("tebatchessim", "moBatchId", "teBatchId", std::to_string(batchId));
+	qDebug() << moBatchId << "is mo batch idea";
+	QList<QVariant> patientsTimeList;
+	QList<QVariant> patientsDoseList;
+	double startactivity;
+	double rangeY;
 
 	if (simGraph){
-		batchesDtList = db->GetAllRowsForValue("tebatchessim", "dateTimeProduced", "moBatchId", std::to_string(moBatchId));
-		bachesActivityList = db->GetAllRowsForValue("tebatchessim", "radioactivity", "moBatchId", std::to_string(moBatchId));
+		patientsTimeList = db->GetAllRowsForValue("dosetopatientsim", "injectionTime", "teBatchId", std::to_string(batchId));
+		patientsDoseList = db->GetAllRowsForValue("dosetopatientsim", "doseRadioactivity", "teBatchId", std::to_string(batchId));
+		startactivity = db->GetdbInt("tebatchessim", "radioactivity", "teBatchId", std::to_string(batchId));
+		rangeY = startactivity + 60;
+		qDebug() << patientsDoseList << " = activity list";
+		qDebug() << patientsTimeList;
 	}
 	else {
 		qDebug() << "no db entry found for graph";
 		return;
 	}
-	int pointsPerBatch = 50;
-	int plotpoints = batchesDtList.count() * pointsPerBatch;
+	
+	// Set date on x-axis
+	QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
+	QDateTime start = QDateTime::fromString(db->GetdbDateTime("tebatchessim", "dateTimeProduced", "teBatchId", std::to_string(batchId)), "yyyy-MM-ddTHH:mm:ss.zzz");
+	QDateTime end = QDateTime(start.date(), patientsTimeList[patientsTimeList.count() - 1].toTime());
+	double starttime = start.toSecsSinceEpoch();
+	double endtime = end.toSecsSinceEpoch() + 3600;
+	dateTicker->setDateTimeFormat("d-MM\nHH:mm");
+	dateTicker->setTickOrigin(starttime);
+	graphui.plot->xAxis->setTicker(dateTicker);
+	QDateTime endOfDay = QDateTime(start.date(), QTime(17, 0));
+	graphui.plot->xAxis->setRange(starttime, endOfDay.toSecsSinceEpoch()+ 15*60);
+
+
+	// Collect data for graph
+	int pointsPerBatch = 49;
+	int plotpoints = patientsTimeList.count() * 50 + 100;
 	double halflife = 6 * 3600;
 	QVector<QCPGraphData> timedel(plotpoints);
-	
-	for (int i = 0; i < batchesDtList.count() - 1; ++i) {
-		double starttime = batchesDtList[i].toDateTime().toSecsSinceEpoch();
-		double endtime = batchesDtList[i + 1].toDateTime().toSecsSinceEpoch();
-		double timeDelta = (endtime - starttime) / pointsPerBatch;
-		for (int indexPoint = i; (indexPoint * 50) < (indexPoint * 50 + 50); ++indexPoint) {
-			timedel[indexPoint].key = 
-		}
 
+	double starttimeInterval = starttime;
+	double endtimeInterval;
+	for (int i = 0; i < patientsTimeList.count(); ++i) {
+		QDateTime endInterval = QDateTime(start.date(), patientsTimeList[i].toTime());
+		endtimeInterval = endInterval.toSecsSinceEpoch();
+		double timeDelta = (endtimeInterval - starttimeInterval) / pointsPerBatch;
+ 		for (int j = 0; j < 50; ++j) {
+			timedel[i * 50 + j].key = starttimeInterval + j * timeDelta;
+			timedel[i * 50 + j].value = startactivity * pow(0.5, ((j * timeDelta) / halflife));
+			if (j == 49) {
+				startactivity = startactivity * pow(0.5, ((j * timeDelta) / halflife));
+				starttimeInterval = endtimeInterval;
+			}
+		}
+		startactivity -= patientsDoseList[i].toDouble();
 	}
+	double endofdaytime = endOfDay.toSecsSinceEpoch();
+	double timeDelta = (endofdaytime - starttimeInterval) / pointsPerBatch;
+	int lastindex = patientsTimeList.count() * 50 - 1;
+	qDebug() << "lastindex: " << lastindex;
+	for (int i = 0; i < 50; ++i) {
+		timedel[lastindex + i].key = starttimeInterval + i * timeDelta;
+		timedel[lastindex + i].value = startactivity * pow(0.5, ((i * timeDelta) / halflife));
+		if (i == 49) {
+			timedel[lastindex + 50].key = endofdaytime;
+			timedel[lastindex + 50].value = 0;
+		}
+	}
+	graphui.plot->graph()->data()->set(timedel);
+
+
+	// Set y-axix
+	graphui.plot->yAxis->setRange(0, rangeY);
+
+	//Set graph Title
+	graphui.plot->plotLayout()->insertRow(0);
+	QCPTextElement* title = new QCPTextElement(graphui.plot, QString("Techtnetium-99 BatchID: ") + QString::number(batchId), QFont("Times", 20));
+	graphui.plot->plotLayout()->addElement(0, 0, title);
+
+	// plot graph
+	graphui.plot->replot();
 	
 }
 
