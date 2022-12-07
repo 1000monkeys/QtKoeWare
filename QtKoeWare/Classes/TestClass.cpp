@@ -62,7 +62,7 @@ void TestUI::Test1() {
 }
 
 void TestUI::Test2() {
-    graph->setTechnetiumGraph(5, true, true);
+ 
 }
 
 void TestUI::Test3() {
