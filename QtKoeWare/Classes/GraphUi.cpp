@@ -22,7 +22,7 @@ GraphUI::GraphUI(QMainWindow* parent)
 	connect(graphui.selectMoButton, &QPushButton::released, this, &GraphUI::selectMoBatch);
 	connect(graphui.selectTeButton, &QPushButton::released, this, &GraphUI::selectTeBatch);
 
-	setTechnetiumGraph(7, true, true);
+	setTechnetiumGraph(1, true, true);
 	
 }
 
