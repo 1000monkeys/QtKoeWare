@@ -13,6 +13,8 @@ PrintPDF::PrintPDF(QMainWindow* parent)
 
 	connect(printPDF.tableView, &QTableView::clicked, this, &PrintPDF::tableOnClick);
 	printPDF.tableView->setSelectionMode(QTableView::SingleSelection);
+
+	printPDF.progressBar->setVisible(false);
 }
 
 void PrintPDF::search() {
@@ -48,8 +50,12 @@ void PrintPDF::tableOnClick(const QModelIndex& notUsed) {
 
 void PrintPDF::createPDF() {
 	if (rowId != NULL) {
+		printPDF.progressBar->setVisible(true);
+		printPDF.printButton->setVisible(false);
 		Pdf pdf;
-		pdf.createPdf(rowId, true);
+		pdf.createPdf(printPDF.progressBar, rowId, true);
+		printPDF.progressBar->setVisible(false);
+		printPDF.printButton->setVisible(true);
 	}
 }
 

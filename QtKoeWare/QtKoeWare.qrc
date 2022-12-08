@@ -41,8 +41,5 @@
         <file>UI Files/testUI.ui</file>
         <file>Classes/pdf.cpp</file>
         <file>Classes/PrintPDF.cpp</file>
-        <file>Headers/pdf.h</file>
-        <file>Headers/PrintPDF.h</file>
-        <file>UI Files/PrintPDF.ui</file>
     </qresource>
 </RCC>

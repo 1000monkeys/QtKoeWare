@@ -5,15 +5,14 @@
 #include <string>
 #include <codecvt>
 #include <locale>
+
 using convert_t = std::codecvt_utf8<wchar_t>;
 
 Pdf::Pdf()
 {
 }
 
-void Pdf::createPdf(int batchId, bool sim) {
-    //int lastBatchId = db->LastInt("batches", "batchId");
-
+void Pdf::createPdf(QProgressBar* bar, int batchId, bool sim) {
     QString html;
     std::map<int, std::map<std::string, std::string>> data = db->getTeBatches(batchId, sim);
     for (int i = 0; i < data.size(); i++) {
@@ -121,14 +120,17 @@ void Pdf::createPdf(int batchId, bool sim) {
     QTextDocument document;
     document.setHtml(html);
 
+    bar->setValue(40);
+
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageOrientation(QPageLayout::Landscape);
     QString filename = QString::number(batchId) + QString::fromStdString("-report-") + QDate::currentDate().toString("yyyy-MM-dd") + QString::fromStdString(".pdf");
     printer.setOutputFileName(filename);
 
+    bar->setValue(70);
     document.print(&printer);
-
+    bar->setValue(95);
 
     std::string new_str = std::filesystem::current_path().generic_string().append("/" + filename.toStdString());
     qDebug() << QString::fromStdString(new_str);
