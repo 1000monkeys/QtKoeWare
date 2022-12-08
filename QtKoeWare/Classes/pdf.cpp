@@ -5,6 +5,7 @@
 #include <string>
 #include <codecvt>
 #include <locale>
+#include "../Headers/GraphUi.h"
 
 using convert_t = std::codecvt_utf8<wchar_t>;
 
@@ -14,45 +15,48 @@ Pdf::Pdf()
 
 void Pdf::createPdf(QProgressBar* bar, int batchId, bool sim) {
     QString html;
+    bool firstTime = true;
     std::map<int, std::map<std::string, std::string>> data = db->getTeBatches(batchId, sim);
     for (int i = 0; i < data.size(); i++) {
         std::map<int, std::map<std::string, std::string>> data2 = db->getBatches(batchId, sim);
-        html += "<table width=\"100%\" style=\"page-break-after: always; padding: 3 3 3 3;\"><tr><td colspan=9>";
-        html += "<div align=\"left\"><h2>Molybdeen batch:</h2>";
+        GraphUI graphUi;
         std::list<std::string> keys;
-        keys.push_back("batchId");
-        keys.push_back("dateTimeProduced");
-        keys.push_back("dateTimeMeasured");
-        keys.push_back("radioactivity");
-        html += "<table border=1>";
-        html += "<tr>";
-        for (std::string k : keys) {
-            html += "<th style=\"padding: 3 3 3 3;\">";
-            html += QString::fromStdString(k);
-            if (k == "radioactivity") {
-                html += QString::fromStdString("(GBq)");
-            }
-            html += "</th>";
-        }
-        html += "</tr>";
-        for (int i = 0; i < data2.size(); i++) {
+        if (firstTime) {
+            firstTime = false;
+            html += "<div align=\"left\"><h2>Molybdeen batch:</h2>";
+            keys.push_back("batchId");
+            keys.push_back("dateTimeProduced");
+            keys.push_back("dateTimeMeasured");
+            keys.push_back("radioactivity");
+            html += "<table border=1>";
             html += "<tr>";
             for (std::string k : keys) {
-                html += "<td align=\"center\" style=\"padding: 3 3 3 3;\">";
-                html += QString::fromStdString(data2[i][k]);
-                html += "</td>";
-                qDebug() << QString::fromStdString(k) << " : " << QString::fromStdString(data2[i][k]);
-
+                html += "<th style=\"padding: 3 3 3 3;\">";
+                html += QString::fromStdString(k);
+                if (k == "radioactivity") {
+                    html += QString::fromStdString("(GBq)");
+                }
+                html += "</th>";
             }
             html += "</tr>";
+            for (int i = 0; i < data2.size(); i++) {
+                html += "<tr>";
+                for (std::string k : keys) {
+                    html += "<td align=\"center\" style=\"padding: 3 3 3 3;\">";
+                    html += QString::fromStdString(data2[i][k]);
+                    html += "</td>";
+                    qDebug() << QString::fromStdString(k) << " : " << QString::fromStdString(data2[i][k]);
+
+                }
+                html += "</tr>";
+            }
+            html += "</table></div>";
+            graphUi.setMolybdenumGraph(batchId, sim, false, true);
+            html += QString::fromStdString("<img src=\"mo99_batchid_" + std::to_string(batchId) + "\"></img><p style=\"page-break-after: always;\"></p>");
         }
-        html += "</table></div></td>";
-
-        html += "<td colspan=1></td>";
-
-        html += "<td colspan=9><div align=\"right\"><h2>Technetium batch:</h2>";
-        html += "<table border=1 style=\"padding: 3 3 3 3;\">";
-        html += "<tr>";
+        
+        html += "<h2>Technetium batch:</h2>";
+        html += "<table border=1 style=\"padding: 3 3 3 3;\"><tr>";
         keys.clear();
         keys.push_back("moBatchId");
         keys.push_back("teBatchId");
@@ -61,6 +65,7 @@ void Pdf::createPdf(QProgressBar* bar, int batchId, bool sim) {
         for (std::string k : keys) {
             html += "<th style=\"padding: 3 3 3 3;\">";
             html += QString::fromStdString(k);
+            qDebug() << "TEST1233423" << QString::fromStdString(k);
             if (k == "radioactivity") {
                 html += QString::fromStdString("(MBq)");
             }
@@ -72,12 +77,15 @@ void Pdf::createPdf(QProgressBar* bar, int batchId, bool sim) {
             html += "<td align=\"center\" style=\"padding: 3 3 3 3;\">";
             html += QString::fromStdString(data[i][k]);
             html += "</td>";
-            qDebug() << QString::fromStdString(k) << " : " << QString::fromStdString(data[i][k]);
+            //qDebug() << QString::fromStdString(k) << " : " << QString::fromStdString(data[i][k]);
 
         }
         html += "</tr>";
-        html += "</table></div>";
-        html += "</td></tr><tr><td colspan=19>";
+        html += "</table>";
+        int teBatchId = std::stoi(data[i]["teBatchId"]);
+        qDebug() << "TEBATCHID:" << teBatchId;
+        graphUi.setTechnetiumGraph(teBatchId, sim, true);
+        html += QString::fromStdString("<img src=\"te99_batchid_" + std::to_string(teBatchId) + "\"></img><p style=\"page-break-after: always;\"></p>");
 
         keys.clear();
         keys.push_back("InjectionDate");
@@ -90,7 +98,7 @@ void Pdf::createPdf(QProgressBar* bar, int batchId, bool sim) {
         keys.push_back("PatientWeight");
         keys.push_back("PatientSex");
         html += "<br />";
-        html += "<h2>Doses:</h2><table border=1 width=\"100%\" style=\"padding: 3 3 3 3;\">";
+        html += "<h2>Doses:</h2><table border=1 width=\"100%\" style=\"page-break-after: always; padding: 3 3 3 3;\">";
         html += "<tr>";
         for (std::string k : keys) {
             html += "<th style=\"padding: 3 3 3 3;\">";
