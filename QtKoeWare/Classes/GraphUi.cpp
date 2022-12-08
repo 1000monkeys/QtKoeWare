@@ -27,7 +27,7 @@ GraphUI::GraphUI(QMainWindow* parent)
 	int id = db->LastInt("batchessim", "batchId");
 	setMolybdenumGraph(id, true, true);
 	setTechnetiumGraph(5, true);
-	setMolybdenumGraph(id, true, true);
+	setMolybdenumGraph(id, true, true, true);
 	/*TEST*/
 
 	// Button connect to func
@@ -36,7 +36,7 @@ GraphUI::GraphUI(QMainWindow* parent)
 	
 }
 
-void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch) {
+void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch, bool print) {
 	int startactivity = 0;
 	QString measuredDateTimeString;
 	if (!simGraph){
@@ -95,15 +95,25 @@ void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch) {
 	graphui.plot->xAxis->setRange(starttime, endtime);
 		
 	//Title
-	setGraphTitle(moBatch, QString("Mo-99  BatchID:"));
+	QString titleText = QString("Mo-99  BatchID: ") + QString::number(moBatch);
+	QString printTitle = QString("mo99_batchid_") + QString::number(moBatch);
+	setGraphTitle(titleText);
 
 	// Set y-axix
 	graphui.plot->yAxis->setRange(0, startactivity + 20);
 
 	// plot graph
 	graphui.plot->replot();
+
+	if (print) {
+		printGraphImage(printTitle);
+	}
 		
 
+}
+
+void GraphUI::printGraphImage(QString title) {
+	graphui.plot->savePng(title+QString(".png"));
 }
 
 void GraphUI::setTechnetiumGraph(int batchId, bool simGraph) {
@@ -220,17 +230,17 @@ void GraphUI::setTechnetiumGraph(int batchId, bool simGraph) {
 
 
 	//Graph Title
-	setGraphTitle(batchId, QString("Te-99  BatchID:"));
+	QString titleText = QString("Te-99  BatchID: ") + QString::number(batchId);
+	setGraphTitle(titleText);
 
 	// plot graph
 	graphui.plot->replot();
 
 }
-void GraphUI::setGraphTitle(int batchid, QString text) {
+void GraphUI::setGraphTitle(QString titleText) {
 	graphui.plot->plotLayout()->remove(graphui.plot->plotLayout()->element(0, 0));
-	//qDebug() << graphui.plot->plotLayout()->takeAt(0) << " is element at zero";
 	QCPTextElement* title = new QCPTextElement(graphui.plot);
-	title->setText(text + QString::number(batchid));
+	title->setText(titleText);
 	title->setFont(QFont("Times", 20));
 	graphui.plot->plotLayout()->addElement(0, 0, title);
 }
