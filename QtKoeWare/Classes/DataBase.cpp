@@ -175,10 +175,10 @@ std::map<std::string, std::string> DataBase::getDefaultSettings() {
     settings["really_really_heavy_weigth"] = "1000";
 
     settings["min_mo_radioactivity"] = "300";
-    settings["max_mo_radioactivity"] = "700";
+    settings["max_mo_radioactivity"] = "900";
 
     settings["min_dose_radioactivity"] = "300";
-    settings["max_dose_radioactivity"] = "700";
+    settings["max_dose_radioactivity"] = "740";
 
     settings["secs_time_offset"] = "3600";
 

@@ -18,21 +18,11 @@ GraphUI::GraphUI(QMainWindow* parent)
 	graphui.plot->plotLayout()->addElement(0, 0, title);
 	graphui.plot->addGraph();
 
-	//int lastBatchId = db->LastInt("batches", "bathId");
-	//if (lastBatchId != 0) {
-	//	setMolybdenumGraph(lastBatchId, false, true);
-	//}
-
-	/*TEST*/
-	int id = db->LastInt("batchessim", "batchId");
-	setMolybdenumGraph(id, true, true);
-	setTechnetiumGraph(5, true);
-	setMolybdenumGraph(id, true, true, true);
-	/*TEST*/
-
-	// Button connect to func
+	// Connect buttons to functions
 	connect(graphui.selectMoButton, &QPushButton::released, this, &GraphUI::selectMoBatch);
 	connect(graphui.selectTeButton, &QPushButton::released, this, &GraphUI::selectTeBatch);
+
+	setTechnetiumGraph(7, true, true);
 	
 }
 
@@ -108,8 +98,6 @@ void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch, b
 		QString printTitle = QString("mo99_batchid_") + QString::number(moBatch);
 		printGraphImage(printTitle);
 	}
-		
-
 }
 
 void GraphUI::printGraphImage(QString title) {

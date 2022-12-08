@@ -60,7 +60,9 @@ void SimRun::MolybdeenBatch() {
     moNewProduceDate.setTime(moNewTime);
 
     // Generate Production radioactivity
-    int productionRadioactivity = Random(300, 901);
+    int lowerActivity = db->GetLatestSetting("min_mo_radioactivity");
+    int upperActivity = db->GetLatestSetting("max_mo_radioactivity");
+    int productionRadioactivity = Random(lowerActivity, upperActivity + 1);
 
     // Measure Date same as production date
     QDate moMeasureDate = moNewDate;
