@@ -19,7 +19,7 @@ public:
 	void selectMoBatch();
 	void selectTeBatch();
 	void setMolybdenumGraph(int moBatchId = 0, bool simGraph = false, bool latestBatch = false, bool print = false);
-	void setTechnetiumGraph(int teBatch = 0, bool simGraph = false);
+	void setTechnetiumGraph(int teBatch = 0, bool simGraph = false, bool print = false);
 	void setGraphTitle(QString titleText);
 	void printGraphImage(QString title);
 	QDateTime getTimeNow(bool simGraph = false);

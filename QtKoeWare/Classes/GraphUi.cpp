@@ -89,23 +89,23 @@ void GraphUI::setMolybdenumGraph(int moBatch, bool simGraph, bool latestBatch, b
 	// Set date on x-axis
 	QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
 	dateTicker->setDateTimeFormat("d-MM-yyyy\nHH:mm");
-	dateTicker->setTickCount(7);
 	dateTicker->setTickOrigin(starttime);
 	graphui.plot->xAxis->setTicker(dateTicker);
 	graphui.plot->xAxis->setRange(starttime, endtime);
 		
 	//Title
 	QString titleText = QString("Mo-99  BatchID: ") + QString::number(moBatch);
-	QString printTitle = QString("mo99_batchid_") + QString::number(moBatch);
 	setGraphTitle(titleText);
 
 	// Set y-axix
 	graphui.plot->yAxis->setRange(0, startactivity + 20);
+	graphui.plot->yAxis->setLabel("Radioactivity(Gbq)");
 
 	// plot graph
 	graphui.plot->replot();
 
 	if (print) {
+		QString printTitle = QString("mo99_batchid_") + QString::number(moBatch);
 		printGraphImage(printTitle);
 	}
 		
@@ -116,7 +116,7 @@ void GraphUI::printGraphImage(QString title) {
 	graphui.plot->savePng(title+QString(".png"));
 }
 
-void GraphUI::setTechnetiumGraph(int batchId, bool simGraph) {
+void GraphUI::setTechnetiumGraph(int batchId, bool simGraph, bool print) {
 	int moBatchId;
 	QList<QVariant> patientsTimeList;
 	QList<QVariant> patientsDoseList;
@@ -226,12 +226,21 @@ void GraphUI::setTechnetiumGraph(int batchId, bool simGraph) {
 
 	// Set y-axix
 	graphui.plot->yAxis->setRange(0, rangeY);
+	graphui.plot->yAxis->setLabel("Radioactivity(Mbq)");
 	
 
 
 	//Graph Title
 	QString titleText = QString("Te-99  BatchID: ") + QString::number(batchId);
 	setGraphTitle(titleText);
+
+
+	//Make graph image
+	if (print) {
+		QString printTitle = QString("te99_batchid_") + QString::number(batchId);
+		printGraphImage(printTitle);
+	}
+	
 
 	// plot graph
 	graphui.plot->replot();
